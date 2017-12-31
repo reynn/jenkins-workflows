@@ -119,24 +119,48 @@ public commit(Map yml, Map args) {
     switch (credential.getClass()) {
       case com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl:
         withCredentials([usernamePassword(credentialsId: credential.id, passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-          sh """git config user.name '$author' \
+          gitCmd = """git config user.name '$author' \
               |&& git config user.email '$email' \
               |&& git config push.default simple \
               |&& git remote set-url origin "https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_HOST}/${env.GIT_ORG}/${env.GIT_REPO}.git" \
               |&& git add ${force ? '-f' : ''} $pattern \
               |&& git commit ${ammend ? '--ammend' : ''} -m \"$message\" \
               |&& git push origin HEAD:${env.BRANCH_NAME}""".stripMargin()
+          concurPipeline.debugPrint('Workflows :: Git :: Commit', [
+            'message'     : message,
+            'pattern'     : pattern,
+            'author'      : author,
+            'email'       : email,
+            'ammend'      : ammend,
+            'force'       : force,
+            'push'        : push,
+            'credentials' : credentials,
+            'gitCmd'      : gitCmd
+          ])
+          sh gitCmd
         }
         break
       case com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey:
         withCredentials([sshUserPrivateKey(credentialsId: credential.id, keyFileVariable: 'GIT_SSH_KEY_FILE', passphraseVariable: 'GIT_SSH_PASSPHRASE', usernameVariable: 'GIT_SSH_USERNAME')]) {
-          sh """git config user.name '$author' \
+          gitCmd = """git config user.name '$author' \
               |&& git config user.email '$email' \
               |&& git config push.default simple \
               |&& git remote set-url origin "git@${env.GIT_HOST}:${env.GIT_ORG}/${env.GIT_REPO}.git" \
               |&& git add ${force ? '-f' : ''} $pattern \
               |&& git commit ${ammend ? '--ammend' : ''} -m \"$message\" \
               |&& GIT_SSH_COMMAND='ssh -i ${env.GIT_SSH_KEY_FILE}' git push origin HEAD:${env.BRANCH_NAME}""".stripMargin()
+          concurPipeline.debugPrint('Workflows :: Git :: Commit', [
+            'message'     : message,
+            'pattern'     : pattern,
+            'author'      : author,
+            'email'       : email,
+            'ammend'      : ammend,
+            'force'       : force,
+            'push'        : push,
+            'credentials' : credentials,
+            'gitCmd'      : gitCmd
+          ])
+          sh gitCmd
         }
         break
     }
