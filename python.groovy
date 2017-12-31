@@ -91,7 +91,7 @@ public script(Map yml, Map args) {
   String requirements = args?.requirements  ?: yml.tools?.python?.requirements
   List arguments      = args?.arguments     ?: yml.tools?.python?.arguments
 
-  String pythonCommand = "$pythonBin $pythonFile"
+  String pythonCommand = "$pythonBin $file"
 
   if (arguments) {
     pythonCommand = "$pythonCommand ${arguments.join(' ')}"
