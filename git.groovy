@@ -107,7 +107,7 @@ public commit(Map yml, Map args) {
   Boolean ammend  = args?.ammend      ?: yml.tools?.git?.commit?.ammend       ?: false
   Boolean force   = args?.force       ?: yml.tools?.git?.commit?.force        ?: false
   Boolean push    = args?.push        ?: yml.tools?.git?.commit?.push         ?: true
-  Map credentials = args?.credentials ?: yml.tools?.git?.commit?.credentials
+  Map credentials = args?.credentials ?: yml.tools?.git?.commit?.credentials  ?: yml.tools?.git?.credentials
 
   String gitCmd = "git add $pattern && git commit"
 
