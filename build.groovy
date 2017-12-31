@@ -27,7 +27,7 @@ full_example:
     tools:
       mage:
         buildImage: "quay.io/example/mage"
-      github:
+      branches:
         patterns:
           feature: .+
     branches:

@@ -24,7 +24,7 @@ tools:
 full_example:
   pipelines:
     tools:
-      github:
+      branches:
         patterns:
           feature: .+
     branches:

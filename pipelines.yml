@@ -1,0 +1,21 @@
+pipelines:
+  general:
+    debug: true
+  tools:
+    python:
+      buildImage: python:3.6-alpine3.7
+      binary: python3
+    branches:
+      patterns:
+        feature: .+
+    slack:
+      channel: git-notifications
+  branches:
+    feature:
+      steps:
+        - python:
+          - script:
+              file: scripts/generate_docs.py
+              requirements: scripts/requirements.txt
+              arguments:
+                - "-o docs"

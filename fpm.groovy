@@ -38,7 +38,7 @@ tools:
 full_example:
   pipelines:
     tools:
-      github:
+      branches:
         patterns:
           master: master
           develop: develop

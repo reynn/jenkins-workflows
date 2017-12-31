@@ -15,7 +15,7 @@ full_example:
         dockerfile: production.dockerfile
         credentials:
           description: example docker creds
-      github:
+      branches:
         patterns:
           feature: .+
     branches:

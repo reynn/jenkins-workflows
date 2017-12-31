@@ -47,7 +47,7 @@ full_example:
         buildImage: "{{ quay_uri }}/da-workflow/ansible-alpine:2.4.1.0"
         playbook: "ansible/playbooks/app_deploy.yml"
         inventory: "ansible/app_inventory.yml"
-      github:
+      branches:
         patterns:
           master: master
           develop: develop
