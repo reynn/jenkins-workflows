@@ -216,6 +216,7 @@ def entry_point():
         if fil.startswith('example'):
             continue
         with open(os.path.join(path, fil)) as groovy_file:
+            print(f"Generating documentation for {fil}...")
             lines = groovy_file.read().splitlines()
             workflow_doc = get_workflow_doc(lines)
             functions = parse_file(lines)

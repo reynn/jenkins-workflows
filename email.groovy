@@ -3,7 +3,7 @@ import com.concur.*;
 workflowDoc = '''
 overview: Send an email within your pipeline.
 additional_resources:
-  - name: Plugin site
+  - name: Mail plugin site
     url: https://plugins.jenkins.io/workflow-basic-steps
 tools:
   - type: String
@@ -41,41 +41,34 @@ tools:
 full_example:
   pipelines:
     tools:
-      ansible:
-        credentials:
-          description: "SSH deploy credentials"
-        buildImage: "{{ quay_uri }}/da-workflow/ansible-alpine:2.4.1.0"
-        playbook: "ansible/playbooks/app_deploy.yml"
-        inventory: "ansible/app_inventory.yml"
+      email:
+        cc: cc-example@domain.com
+        replyTo: repyto@domain.com
       branches:
         patterns:
-          master: master
-          develop: develop
           feature: .+
     branches:
       feature:
         steps:
           - custom: # This should be your build process
             - buildPackage:
-          - ansible:
-            - playbook:
-                limit: staging
           - email:
-            - send: "Deployment to staging successful for branch {{ branch_name }} | {{ build_url }}"
+            - send:
+                to: team@domain.com
+                body: "Deployment to staging successful for branch {{ branch_name }} | {{ build_url }}"
       master:
         steps:
-          - ansible:
-            - playbook:
-                limit: production
           - email:
-            - send: "Merge to master successful, deployment successful | {{ build_url }}"
+            - send: 
+                to: team@domain.com
+                body: "Merge to master successful, deployment successful | {{ build_url }}"
 '''
 
 concurPipeline  = new Commands()
 concurUtil      = new Util()
 
 /*
-description: Execute an Ansible playbook
+description: Send an email.
 parameters:
   - type: String
     name: to
@@ -119,7 +112,7 @@ example:
             # Advanced
             - send:
                 to: user@example.com
-                send: "Example email from {{ build_url }}"
+                body: "Example email from {{ build_url }}"
  */
 public send(Map yml, Map options) {
   def emailData = yml.tools?.email ?: [:]

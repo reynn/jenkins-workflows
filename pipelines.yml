@@ -2,12 +2,15 @@ pipelines:
   general:
     debug: true
   tools:
-    python:
-      buildImage: python:3.6-alpine3.7
-      binary: python3
     branches:
       patterns:
         feature: .+
+    git:
+      credentials:
+        description: GitHub Username/Password
+    python:
+      buildImage: python:3.6-alpine3.7
+      binary: python3
     jenkins:
       workflows:
         branch: pipeline
@@ -22,3 +25,8 @@ pipelines:
               requirements: scripts/requirements.txt
               arguments:
                 - "-o docs"
+        - git:
+          - commit:
+              message: "Automatic documentation generated."
+              push: true
+
