@@ -8,6 +8,9 @@ pipelines:
     branches:
       patterns:
         feature: .+
+    jenkins:
+      workflows:
+        branch: pipeline
     slack:
       channel: git-notifications
   branches:
