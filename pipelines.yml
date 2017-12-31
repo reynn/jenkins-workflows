@@ -29,5 +29,5 @@ pipelines:
           - commit:
               message: "Automatic documentation generated."
               push: true
-              ammend: true
+              amend: true
               force: true

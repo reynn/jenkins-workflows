@@ -23,8 +23,8 @@ tools:
     default: ${env.GIT_AUTHOR} <${env.GIT_EMAIL}>
   - type: Boolean
     section: git.commit
-    name: ammend
-    description: Whether to ammend the previous commit.
+    name: amend
+    description: Whether to amend the previous commit.
     default: false
   - type: Boolean
     section: git.commit
@@ -77,8 +77,8 @@ parameters:
     default: ${env.GIT_AUTHOR} <${env.GIT_EMAIL}>
   - type: Boolean
     section: git.commit
-    name: ammend
-    description: Whether to ammend the previous commit.
+    name: amend
+    description: Whether to amend the previous commit.
     default: false
   - type: Boolean
     section: git.commit
@@ -104,7 +104,7 @@ public commit(Map yml, Map args) {
   String pattern  = args?.pattern     ?: yml.tools?.git?.commit?.pattern      ?: '.'
   String author   = args?.author      ?: yml.tools?.git?.commit?.author       ?: env.GIT_AUTHOR
   String email    = args?.email       ?: yml.tools?.git?.commit?.email        ?: env.GIT_EMAIL
-  Boolean ammend  = args?.ammend      ?: yml.tools?.git?.commit?.ammend       ?: false
+  Boolean amend   = args?.amend       ?: yml.tools?.git?.commit?.amend        ?: false
   Boolean force   = args?.force       ?: yml.tools?.git?.commit?.force        ?: false
   Boolean push    = args?.push        ?: yml.tools?.git?.commit?.push         ?: true
   Map credentials = args?.credentials ?: yml.tools?.git?.commit?.credentials  ?: yml.tools?.git?.credentials
@@ -124,14 +124,14 @@ public commit(Map yml, Map args) {
               && git config push.default simple \
               && git remote set-url origin "https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_HOST}/${env.GIT_ORG}/${env.GIT_REPO}.git" \
               && git add ${force ? '-f' : ''} $pattern \
-              && git commit ${ammend ? '--ammend' : ''} -m \"$message\" \
+              && git commit ${amend ? '--amend' : ''} -m \"$message\" \
               && git push origin HEAD:${env.BRANCH_NAME}"""
           concurPipeline.debugPrint('Workflows :: Git :: Commit', [
             'message'     : message,
             'pattern'     : pattern,
             'author'      : author,
             'email'       : email,
-            'ammend'      : ammend,
+            'amend'      : amend,
             'force'       : force,
             'push'        : push,
             'credentials' : credentials,
@@ -147,14 +147,14 @@ public commit(Map yml, Map args) {
               && git config push.default simple \
               && git remote set-url origin "git@${env.GIT_HOST}:${env.GIT_ORG}/${env.GIT_REPO}.git" \
               && git add ${force ? '-f' : ''} $pattern \
-              && git commit ${ammend ? '--ammend' : ''} -m \"$message\" \
+              && git commit ${amend ? '--amend' : ''} -m \"$message\" \
               && GIT_SSH_COMMAND='ssh -i ${env.GIT_SSH_KEY_FILE}' git push origin HEAD:${env.BRANCH_NAME}"""
           concurPipeline.debugPrint('Workflows :: Git :: Commit', [
             'message'     : message,
             'pattern'     : pattern,
             'author'      : author,
             'email'       : email,
-            'ammend'      : ammend,
+            'amend'      : amend,
             'force'       : force,
             'push'        : push,
             'credentials' : credentials,
