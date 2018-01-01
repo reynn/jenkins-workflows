@@ -13,11 +13,11 @@ tools:
   - type: String
     name: playbook
     required: true
-    description: Path to the playbook file used during this run
+    description: Path to the playbook file used during this run.
   - type: String
     name: inventory
     required: true
-    description: Path to an inventory file to run the playbook against
+    description: Path to an inventory file to run the playbook against.
   - type: String
     name: limit
     required: false
@@ -30,23 +30,23 @@ tools:
   - type: Map
     name: credentials
     required: false
-    description: Key/Value pair of the credentials to use when running the playbook
+    description: Key/Value pair of the credentials to use when running the playbook.
   - type: Map
     name: extraVars
     required: false
-    description: equivalent to `-e` or `--extra-vars` overwrite variables
+    description: equivalent to `-e` or `--extra-vars` overwrite variables.
   - type: List
     name: tags
     required: false
-    description: Run only specific tags during the playbook run
+    description: Run only specific tags during the playbook run.
   - type: List
     name: skippedTags
     required: false
-    description: Skip the specified tags during the playbook run
+    description: Skip the specified tags during the playbook run.
   - type: List
     name: extras
     required: false
-    description: Additional arguments to the `ansible-playbook` command
+    description: Additional arguments to the `ansible-playbook` command.
   - type: Boolean
     name: sudo
     required: false
@@ -60,7 +60,7 @@ tools:
   - type: int
     name: verbosity
     required: false
-    description: Levels of verbose output to have. Example setting this to 2 would be the equivalent of -vv
+    description: Levels of verbose output to have. Example setting this to 2 would be the equivalent of -vv.
 full_example: |
   pipelines:
     tools:
@@ -98,7 +98,7 @@ concurUtil      = new Util()
 concurGit       = new Git()
 
 /*
-description: Execute an Ansible playbook
+description: Execute an Ansible playbook.
 parameters:
   - type: String
     name: buildImage
@@ -107,11 +107,11 @@ parameters:
   - type: String
     name: playbook
     required: true
-    description: Path to the playbook file used during this run
+    description: Path to the playbook file used during this run.
   - type: String
     name: inventory
     required: true
-    description: Path to an inventory file to run the playbook against
+    description: Path to an inventory file to run the playbook against.
   - type: String
     name: limit
     required: false
@@ -124,23 +124,23 @@ parameters:
   - type: Map
     name: credentials
     required: false
-    description: Key/Value pair of the credentials to use when running the playbook
+    description: Key/Value pair of the credentials to use when running the playbook.
   - type: Map
     name: extraVars
     required: false
-    description: equivalent to `-e` or `--extra-vars` overwrite variables
+    description: equivalent to `-e` or `--extra-vars` overwrite variables.
   - type: List
     name: tags
     required: false
-    description: Run only specific tags during the playbook run
+    description: Run only specific tags during the playbook run.
   - type: List
     name: skippedTags
     required: false
-    description: Skip the specified tags during the playbook run
+    description: Skip the specified tags during the playbook run.
   - type: List
     name: extras
     required: false
-    description: Additional arguments to the `ansible-playbook` command
+    description: Additional arguments to the `ansible-playbook` command.
   - type: Boolean
     name: sudo
     required: false
@@ -154,7 +154,7 @@ parameters:
   - type: int
     name: verbosity
     required: false
-    description: Levels of verbose output to have. Example setting this to 2 would be the equivalent of -vv
+    description: Levels of verbose output to have. Example setting this to 2 would be the equivalent of -vv.
 example:
   branches:
     feature:
@@ -227,7 +227,7 @@ public playbook(Map yml, Map args) {
 
   docker.image(dockerImage).inside('-u 0:0') {
     if (!concurUtil.binAvailable('ansible')) {
-      error("""Attempt to use ansible binary failed, please ensure the image [$dockerImage] contains an install of Ansible and that it is in the PATH.""")
+      error("""Workflows :: ansible :: playbook :: Attempt to use ansible binary failed, please ensure the image [$dockerImage] contains an install of Ansible and that it is in the PATH.""")
     }
     def ansibleVersion = sh(returnStdout: true, script: 'ansible --version').split('\n')[0].split(' ')[1]
     println "Container has Ansible version [$ansibleVersion] installed."
@@ -245,7 +245,7 @@ public playbook(Map yml, Map args) {
                       sudoUser:       sudoUser,
                       tags:           tags)
     } else {
-      error("Ansible workflow currently only works with the Ansible plugin installed.")
+      error("Workflows :: ansible :: playbook :: Ansible workflow currently only works with the Ansible plugin installed.")
     }
   }
 }

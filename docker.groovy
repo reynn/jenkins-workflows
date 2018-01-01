@@ -8,11 +8,38 @@ additional_resources:
     url: https://docs.docker.com/engine/reference/commandline/build/
   - name: Docker push documentation
     url: https://docs.docker.com/engine/reference/commandline/push/
+tools:
+  - type: String
+    name: dockerfile
+    section: docker
+    description: Path to a dockerfile to build, equivalent to `-f <dockerfile>`.
+  - type: String
+    name: imageName
+    section: docker
+    default: "<git_org>/<git_repo>"
+    description: What to name the image, equivalent to `-t <imageName>`.
+  - type: String
+    name: imageTag
+    section: docker
+    default: buildVersion
+    description: What to name the image, equivalent to `-t <imageName>:<imageTag>`.
+  - type: String
+    name: contextPath
+    section: docker
+    default: .
+    description: Path to the directory to start the Docker build, equivalent to the final argument to docker build command.
+  - type: String
+    name: uri
+    section: github
+    default: https://<git_host>/<git_org>/<git_repo>
+  - type: Map
+    name: buildArgs
+    section: docker
+    description: A map of arguments to pass to docker build command, equivalent to `--build-arg <key>=<value>`.
 full_example: |
   pipelines:
     tools:
       docker:
-        dockerfile: production.dockerfile
         credentials:
           description: example docker creds
       branches:
@@ -23,6 +50,7 @@ full_example: |
         steps:
           - docker: # This should be your build process
             - build:
+                dockerfile: production.dockerfile
                 buildArgs:
                   CommitSha: "{{ git_commit }}"
                   BuildDate: "{{ timestamp }}"
@@ -59,7 +87,7 @@ parameters:
     default: https://<git_host>/<git_org>/<git_repo>
   - type: Map
     name: buildArgs
-    description: A map of arguments to pass to docker build command, equivalent to `--build-arg <key>=<value>` 
+    description: A map of arguments to pass to docker build command, equivalent to `--build-arg <key>=<value>`.
 example:
   branches:
     feature:
@@ -82,7 +110,7 @@ public build(Map yml, Map args) {
   String dockerfile = args?.dockerfile            ?: yml.tools?.docker?.dockerfile
   String imageName  = args?.imageName             ?: yml.tools?.docker?.imageName   ?: "${env.GIT_ORG}/${env.GIT_REPO}"
   String imageTag   = args?.imageTag              ?: yml.tools?.docker?.imageTag    ?: buildVersion
-  String context    = args?.contextPath           ?: yml.tools?.docker?.contextPath ?: '.'
+  String context    = args?.contextPath           ?: yml.tools?.docker?.contextPath ?: "."
   String vcsUrl     = args?.vcsUrl                ?: yml.tools?.github?.uri         ?: "https://${GIT_HOST}/${env.GIT_ORG}/${env.GIT_REPO}"
   Map buildArgs     = args?.buildArgs             ?: yml.tools?.docker?.buildArgs   ?: [:]
 

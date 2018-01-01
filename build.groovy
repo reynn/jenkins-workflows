@@ -12,11 +12,11 @@ tools:
   - type: String
     name: buildImage
     section: mage
-    description: Docker image that has Mage installed
+    description: Docker image that has Mage installed.
   - type: String
     name: target
     section: mage
-    description: The mage target 
+    description: The mage target to execute.
   - type: String
     name: mageFileDir
     section: mage
@@ -47,10 +47,10 @@ description: Execute mage targets.
 parameters:
   - type: String
     name: buildImage
-    description: Docker image that has Mage installed
+    description: Docker image that has Mage installed.
   - type: String
     name: target
-    description: The mage target 
+    description: The mage target to execute.
   - type: String
     name: mageFileDir
     default: '.'
