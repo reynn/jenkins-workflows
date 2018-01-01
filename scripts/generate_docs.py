@@ -169,18 +169,15 @@ def create_markdown_table(values):
 
 def render_jinja_template(tpl_path, context):
     path, filename = os.path.split(tpl_path)
-
-    jinja_loader = jinja2.FileSystemLoader(os.path.join(SCRIPT_PATH, path))
-    jinja_environment = jinja2.Environment(
-        loader=jinja_loader
-    )
-    return jinja_environment.get_template(filename).render(context)
+    return jinja2.Environment(
+        loader=jinja2.FileSystemLoader(path or './')
+    ).get_template(filename).render(context)
 
 
 def create_index_markdown(groovy_files, docs_folder):
     print('Generating index.md ...')
     links = []
-    for groovy_file in groovy_files:
+    for groovy_file in sorted(groovy_files):
         workflow_name = os.path.splitext(groovy_file)[0]
         links.append(
             f"* [{workflow_name.title()}]({workflow_name.upper()}.md)")
