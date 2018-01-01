@@ -116,7 +116,7 @@ public createPullRequest(Map yml, Map args) {
 
   if (prTemplates.size() > 0) {
     println "Pull Request template found, using that instead of provided summary..."
-    String templateContents = readFile(prTemplates[0])
+    String templateContents = readFile(prTemplates[0].toString())
     summary = concurUtil.mustacheReplaceAll(templateContents)
   }
 
