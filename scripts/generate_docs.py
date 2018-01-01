@@ -170,7 +170,7 @@ def create_markdown_table(values):
 def render_jinja_template(tpl_path, context):
     path, filename = os.path.split(tpl_path)
     return jinja2.Environment(
-        loader=jinja2.FileSystemLoader(path or './')
+        loader=jinja2.FileSystemLoader(path)
     ).get_template(filename).render(context)
 
 
@@ -185,7 +185,7 @@ def create_index_markdown(groovy_files, docs_folder):
     rendered_template = render_jinja_template('../.github/PAGES_INDEX.md.j2', {'WORKFLOW_LINKS': '\n'.join(links)})
 
     with open(os.path.join(docs_folder, 'index.md'), 'w') as w:
-        w.write(rendered_template)
+        w.write(rendered_template + '\n')
 
 
 def create_markdown_doc(name, docs_folder, workflow_doc, functions):
