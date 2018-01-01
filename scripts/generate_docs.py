@@ -1,4 +1,5 @@
 import jinja2
+from pathlib import Path
 import os
 import re
 import sys
@@ -9,7 +10,7 @@ from tabulate import tabulate
 
 METHOD_DEF_REGEX = re.compile(r'^public (?P<method_name>.+?)\((?P<method_args>.+?)\) \{$')
 METHOD_END_REGEX = re.compile(r'^\}$')
-SCRIPT_PATH = os.path.join(os.path.dirname(sys.argv[0]))
+SCRIPT_PATH = Path('..').resolve()
 
 
 class Arg:
@@ -168,8 +169,8 @@ def create_markdown_table(values):
 
 
 def render_jinja_template(tpl_path, context):
-    path, filename = os.path.split(os.path.join(SCRIPT_PATH, '..', tpl_path))
-    print(f"Searching for tempaltes in {path}")
+    path, filename = os.path.split((SCRIPT_PATH / tpl_path).resolve())
+    print(f"Searching for templates in {path}")
     env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(path)
     )
@@ -187,13 +188,13 @@ def create_index_markdown(groovy_files, docs_folder):
 
     rendered_template = render_jinja_template('.github/PAGES_INDEX.md.j2', {'WORKFLOW_LINKS': '\n'.join(links)})
 
-    with open(os.path.join(docs_folder, 'index.md'), 'w') as w:
+    with open(docs_folder / 'index.md', 'w') as w:
         w.write(rendered_template + '\n')
 
 
 def create_markdown_doc(name, docs_folder, workflow_doc, functions):
-    if not os.path.exists(docs_folder):
-        os.mkdir(docs_folder)
+    if not docs_folder.exists():
+        docs_folder.mkdir()
     lines = [f"# {name.replace('.groovy', '').title()}"]
     if workflow_doc:
         file_docs = parse_yaml(str('\n'.join(workflow_doc)))
@@ -225,7 +226,7 @@ def create_markdown_doc(name, docs_folder, workflow_doc, functions):
             lines.append('\n## Additional Resources\n')
             for resource in file_docs.get('additional_resources'):
                 lines.append(f"* [{resource.get('name')}]({resource.get('url')})")
-        with open(os.path.join(docs_folder, name.upper().replace('.GROOVY', '.md')), 'w') as w:
+        with (docs_folder / name.upper().replace('.GROOVY', '.md')).open(mode='w') as w:
             w.write('\n'.join(lines))
     else:
         print(f"{name} does not contain a workflow_doc = '''''' string. exiting.")
@@ -242,21 +243,19 @@ def entry_point():
         parser.print_usage()
         exit(1)
 
-    path = os.path.join(SCRIPT_PATH, '..')
-    groovy_files = [x for x in os.listdir(path) if x.endswith('.groovy')]
-    for fil in groovy_files:
-        if fil.startswith('example'):
+    for fil in SCRIPT_PATH.rglob('*.groovy'):
+        if fil.name.startswith('example'):
             continue
-        with open(os.path.join(path, fil)) as groovy_file:
-            print(f"Generating documentation for {fil}...")
+        with fil.open() as groovy_file:
+            print(f"Generating documentation for {fil.name}...")
             lines = groovy_file.read().splitlines()
             workflow_doc = get_workflow_doc(lines)
             functions = parse_file(lines)
-            create_markdown_doc(name=fil,
-                                docs_folder=os.path.join(path, args.out_path),
+            create_markdown_doc(name=fil.name,
+                                docs_folder=SCRIPT_PATH / args.out_path,
                                 workflow_doc=workflow_doc,
                                 functions=functions)
-    create_index_markdown(groovy_files, os.path.join(path, args.out_path))
+    create_index_markdown([x.name for x in SCRIPT_PATH.rglob('*.groovy')], SCRIPT_PATH / args.out_path)
 
 
 if __name__ == '__main__':
