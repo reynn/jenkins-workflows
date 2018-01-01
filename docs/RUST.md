@@ -33,7 +33,7 @@ branches:
   feature:
     steps:
     - rust:
-      - cargo: null
+      - cargo:
       - cargo:
           command: build
           title: Fix for issue {{ branch_name }}.

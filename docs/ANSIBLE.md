@@ -51,7 +51,7 @@ branches:
   feature:
     steps:
     - ansible:
-      - playbook: null
+      - playbook:
       - playbook:
           extraVars:
             DOCKER_IMAGE: '{{ DOCKER_IMAGE_TAG }}'
@@ -67,14 +67,14 @@ pipelines:
     feature:
       steps:
       - custom:
-        - buildPackage: null
+        - buildPackage:
       - ansible:
         - playbook:
             limit: staging
     master:
       steps:
       - github:
-        - createRelease: null
+        - createRelease:
       - ansible:
         - playbook:
             limit: production

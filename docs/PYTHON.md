@@ -35,7 +35,7 @@ branches:
   feature:
     steps:
     - python:
-      - script: null
+      - script:
       - script:
           binary: python3
           script: scripts/update_docs.py

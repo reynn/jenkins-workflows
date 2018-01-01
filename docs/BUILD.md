@@ -31,7 +31,7 @@ branches:
   feature:
     steps:
     - build:
-      - mage: null
+      - mage:
       - mage:
           target: Install
 ```
@@ -44,7 +44,7 @@ pipelines:
     feature:
       steps:
       - build:
-        - mage: null
+        - mage:
       - build:
         - mage:
             target: Docker

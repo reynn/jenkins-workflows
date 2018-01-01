@@ -100,14 +100,16 @@ example:
             - commit:
  */
 public commit(Map yml, Map args) {
-  String message  = args?.message     ?: yml.tools?.git?.commit?.message      ?: "Automatic commit from {{ build_number }}"
-  String pattern  = args?.pattern     ?: yml.tools?.git?.commit?.pattern      ?: '.'
-  String author   = args?.author      ?: yml.tools?.git?.commit?.author       ?: env.GIT_AUTHOR
-  String email    = args?.email       ?: yml.tools?.git?.commit?.email        ?: env.GIT_EMAIL
-  Boolean amend   = args?.amend       ?: yml.tools?.git?.commit?.amend        ?: false
-  Boolean force   = args?.force       ?: yml.tools?.git?.commit?.force        ?: false
-  Boolean push    = args?.push        ?: yml.tools?.git?.commit?.push         ?: true
-  Map credentials = args?.credentials ?: yml.tools?.git?.commit?.credentials  ?: yml.tools?.git?.credentials
+  String message      = args?.message     ?: yml.tools?.git?.commit?.message      ?: "Automatic commit from {{ build_number }}"
+  String pattern      = args?.pattern     ?: yml.tools?.git?.commit?.pattern      ?: '.'
+  String author       = args?.author      ?: yml.tools?.git?.commit?.author       ?: env.GIT_AUTHOR
+  String email        = args?.email       ?: yml.tools?.git?.commit?.email        ?: env.GIT_EMAIL
+  Boolean amend       = args?.amend       ?: yml.tools?.git?.commit?.amend        ?: false
+  Boolean forceAdd    = args?.force       ?: yml.tools?.git?.commit?.force        ?: false
+  Boolean forcePush   = args?.forcePush   ?: yml.tools?.git?.commit?.forcePush    ?: false
+  Boolean push        = args?.push        ?: yml.tools?.git?.commit?.push         ?: true
+  Boolean failOnError = args?.failOnError ?: yml.tools?.git?.commit?.failOnError  ?: false
+  Map credentials     = args?.credentials ?: yml.tools?.git?.commit?.credentials  ?: yml.tools?.git?.credentials
 
   String gitCmd = "git add $pattern && git commit"
 
@@ -123,21 +125,24 @@ public commit(Map yml, Map args) {
               && git config user.email '$email' \
               && git config push.default simple \
               && git remote set-url origin "https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_HOST}/${env.GIT_ORG}/${env.GIT_REPO}.git" \
-              && git add ${force ? '-f' : ''} $pattern \
+              && git add ${forceAdd ? '-f' : ''} $pattern \
               && git commit ${amend ? '--amend' : ''} -m \"$message\" \
-              && git push origin HEAD:${env.BRANCH_NAME}"""
+              && git push ${forcePush ? '-f' : ''} origin HEAD:${env.BRANCH_NAME}"""
           concurPipeline.debugPrint('Workflows :: Git :: Commit', [
             'message'     : message,
             'pattern'     : pattern,
             'author'      : author,
             'email'       : email,
-            'amend'      : amend,
-            'force'       : force,
+            'amend'       : amend,
+            'forceAdd'    : forceAdd,
             'push'        : push,
             'credentials' : credentials,
             'gitCmd'      : gitCmd
           ])
-          sh gitCmd
+          def retCode = sh returnStatus: true, script: gitCmd
+          if (failOnError && retCode > 0) {
+            error('Failed to push changes to GitHub, please look above in the output to see what happened.')
+          }
         }
         break
       case com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey:
@@ -146,21 +151,24 @@ public commit(Map yml, Map args) {
               && git config user.email '$email' \
               && git config push.default simple \
               && git remote set-url origin "git@${env.GIT_HOST}:${env.GIT_ORG}/${env.GIT_REPO}.git" \
-              && git add ${force ? '-f' : ''} $pattern \
+              && git add ${forceAdd ? '-f' : ''} $pattern \
               && git commit ${amend ? '--amend' : ''} -m \"$message\" \
-              && GIT_SSH_COMMAND='ssh -i ${env.GIT_SSH_KEY_FILE}' git push origin HEAD:${env.BRANCH_NAME}"""
+              && GIT_SSH_COMMAND='ssh -i ${env.GIT_SSH_KEY_FILE}' git push ${forcePush ? '-f' : ''} origin HEAD:${env.BRANCH_NAME}"""
           concurPipeline.debugPrint('Workflows :: Git :: Commit', [
             'message'     : message,
             'pattern'     : pattern,
             'author'      : author,
             'email'       : email,
-            'amend'      : amend,
-            'force'       : force,
+            'amend'       : amend,
+            'forceAdd'    : forceAdd,
             'push'        : push,
             'credentials' : credentials,
             'gitCmd'      : gitCmd
           ])
-          sh gitCmd
+          def retCode = sh returnStatus: true, script: gitCmd
+          if (failOnError && retCode > 0) {
+            error('Failed to push changes to GitHub, please look above in the output to see what happened.')
+          }
         }
         break
     }

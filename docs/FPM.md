@@ -41,7 +41,7 @@ branches:
   feature:
     steps:
     - ansible:
-      - playbook: null
+      - playbook:
       - playbook:
           extraVars:
             DOCKER_IMAGE: '{{ DOCKER_IMAGE_TAG }}'
@@ -62,7 +62,7 @@ pipelines:
             - deb
             - rpm
       - artifactory:
-        - publish: null
+        - publish:
   tools:
     branches:
       patterns:

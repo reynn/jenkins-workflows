@@ -22,7 +22,7 @@ branches:
   feature:
     steps:
     - docker:
-      - build: null
+      - build:
       - build:
           buildArgs:
             BuildDate: '{{ timestamp }}'
@@ -50,7 +50,7 @@ branches:
   feature:
     steps:
     - docker:
-      - push: null
+      - push:
       - push:
           additionalTags:
           - '{{ git_commit }}'

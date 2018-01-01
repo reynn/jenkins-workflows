@@ -36,7 +36,7 @@ branches:
   feature:
     steps:
     - github:
-      - createPullRequest: null
+      - createPullRequest:
       - createPullRequest:
           title: Fix for issue {{ branch_name }}.
           toBranch: develop
@@ -52,7 +52,7 @@ pipelines:
     feature:
       steps:
       - github:
-        - createPullRequest: null
+        - createPullRequest:
   tools:
     branches:
       patterns:

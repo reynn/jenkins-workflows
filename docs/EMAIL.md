@@ -57,7 +57,7 @@ pipelines:
     feature:
       steps:
       - custom:
-        - buildPackage: null
+        - buildPackage:
       - email:
         - send:
             body: Deployment to staging successful for branch {{ branch_name }} |

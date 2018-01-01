@@ -44,7 +44,7 @@ branches:
   feature:
     steps:
     - golang:
-      - glide: null
+      - glide:
       - glide:
           additionalArgs:
           - --force
@@ -69,7 +69,7 @@ branches:
   feature:
     steps:
     - golang:
-      - godep: null
+      - godep:
       - godep:
           additionalArgs:
           - -v
@@ -96,7 +96,7 @@ branches:
   feature:
     steps:
     - golang:
-      - build: null
+      - build:
       - build:
           env:
             GOARCH: amd64
@@ -126,7 +126,7 @@ branches:
   feature:
     steps:
     - golang:
-      - test: null
+      - test:
       - test:
           additionalArgs:
           - ./...
@@ -143,7 +143,7 @@ pipelines:
     feature:
       steps:
       - golang:
-        - glide: null
+        - glide:
         - test:
             binary: ginkgo
             gatherJunit: true

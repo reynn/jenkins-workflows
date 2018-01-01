@@ -11,7 +11,7 @@
 | message     | String  | `Automatic commit from {{ job_url }}`  | git.commit | The message to attach to the commit.           |
 | pattern     | String  | `.`                                    | git.commit | Pattern for the `git add` command              |
 | author      | String  | `${env.GIT_AUTHOR} <${env.GIT_EMAIL}>` | git.commit | Author of this commit                          |
-| ammend      | Boolean | `False`                                | git.commit | Whether to ammend the previous commit.         |
+| amend       | Boolean | `False`                                | git.commit | Whether to amend the previous commit.          |
 | push        | Boolean | `True`                                 | git.commit | Push the commit to git as well.                |
 | credentials | Map     |                                        | git.commit | Credentials to use when pushing to git origin. |
 
@@ -26,7 +26,7 @@
 | message     | String  | `Automatic commit from {{ job_url }}`  | git.commit | The message to attach to the commit.           |
 | pattern     | String  | `.`                                    | git.commit | Pattern for the `git add` command              |
 | author      | String  | `${env.GIT_AUTHOR} <${env.GIT_EMAIL}>` | git.commit | Author of this commit                          |
-| ammend      | Boolean | `False`                                | git.commit | Whether to ammend the previous commit.         |
+| amend       | Boolean | `False`                                | git.commit | Whether to amend the previous commit.          |
 | push        | Boolean | `True`                                 | git.commit | Push the commit to git as well.                |
 | credentials | Map     |                                        | git.commit | Credentials to use when pushing to git origin. |
 
@@ -38,7 +38,7 @@ branches:
     steps:
     - git:
       - commit: Example email from {{ build_url }}
-      - commit: null
+      - commit:
 ```
 
 ## Full Example Pipeline
@@ -49,7 +49,7 @@ pipelines:
     feature:
       steps:
       - custom:
-        - buildPackage: null
+        - buildPackage:
       - git:
         - commit:
             message: Automatic commit from pipeline.
