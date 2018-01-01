@@ -10,7 +10,7 @@ from tabulate import tabulate
 
 METHOD_DEF_REGEX = re.compile(r'^public (?P<method_name>.+?)\((?P<method_args>.+?)\) \{$')
 METHOD_END_REGEX = re.compile(r'^\}$')
-SCRIPT_PATH = Path('..').resolve()
+SCRIPT_PATH = Path()
 
 
 class Arg:
@@ -193,8 +193,7 @@ def create_index_markdown(groovy_files, docs_folder):
 
 
 def create_markdown_doc(name, docs_folder, workflow_doc, functions):
-    if not docs_folder.exists():
-        docs_folder.mkdir()
+    docs_folder.mkdir(exist_ok=True)
     lines = [f"# {name.replace('.groovy', '').title()}"]
     if workflow_doc:
         file_docs = parse_yaml(str('\n'.join(workflow_doc)))
