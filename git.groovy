@@ -35,7 +35,7 @@ tools:
     section: git.commit
     name: credentials
     description: Credentials to use when pushing to git origin.
-full_example:
+full_example: |
   pipelines:
     tools:
       git:
@@ -61,32 +61,26 @@ concurUtil      = new Util()
 description: Execute an Ansible playbook
 parameters:
   - type: String
-    section: git.commit
     name: message
     description: The message to attach to the commit.
     default: "Automatic commit from {{ job_url }}"
   - type: String
-    section: git.commit
     name: pattern
     description: Pattern for the `git add` command
     default: "."
   - type: String
-    section: git.commit
     name: author
     description: Author of this commit
     default: ${env.GIT_AUTHOR} <${env.GIT_EMAIL}>
   - type: Boolean
-    section: git.commit
     name: amend
     description: Whether to amend the previous commit.
     default: false
   - type: Boolean
-    section: git.commit
     name: push
     description: Push the commit to git as well.
     default: true
   - type: Map
-    section: git.commit
     name: credentials
     description: Credentials to use when pushing to git origin.
 example:

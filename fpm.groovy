@@ -16,7 +16,7 @@ tools:
     default: dir
   - type: String
     name: version
-    description: Version number to use for the resulting package, eqivalent to 
+    description: Version number to use for the resulting package, eqivalent to the `-v` flag.
     default: "{{ build_version }}"
   - type: String
     name: name
@@ -35,7 +35,7 @@ tools:
     name: targetTypes
     description: Formats to create with the command.
     default: ['rpm']
-full_example:
+full_example: |
   pipelines:
     tools:
       branches:

@@ -1,7 +1,7 @@
+import jinja2
 import os
 import re
 import sys
-import textwrap
 import yaml
 
 from argparse import ArgumentParser
@@ -9,6 +9,7 @@ from tabulate import tabulate
 
 METHOD_DEF_REGEX = re.compile(r'^public (?P<method_name>.+?)\((?P<method_args>.+?)\) \{$')
 METHOD_END_REGEX = re.compile(r'^\}$')
+SCRIPT_PATH = os.path.join(os.path.dirname(sys.argv[0]))
 
 
 class Arg:
@@ -166,19 +167,28 @@ def create_markdown_table(values):
     return tabulate(rows, [x.title() for x in columns], tablefmt="pipe")
 
 
+def render_jinja_template(tpl_path, context):
+    path, filename = os.path.split(tpl_path)
+
+    jinja_loader = jinja2.FileSystemLoader(os.path.join(SCRIPT_PATH, path))
+    jinja_environment = jinja2.Environment(
+        loader=jinja_loader
+    )
+    return jinja_environment.get_template(filename).render(context)
+
+
 def create_index_markdown(groovy_files, docs_folder):
     print('Generating index.md ...')
-    lines = []
-    lines.append('# Welcome to Workflows for Jenkins\n')
-    lines.append('These workflows were originally created by the Workflow team at Concur.')
-    lines.append('The goal is to help developers more quickly and easily take advantage of Jenkins pipelines without the need to write complex Jenkinsfiles.')
-    lines.append('\n## Available Workflows\n')
+    links = []
     for groovy_file in groovy_files:
         workflow_name = os.path.splitext(groovy_file)[0]
-        lines.append(f"* [{workflow_name.title()}]({workflow_name.upper()}.md)")
+        links.append(
+            f"* [{workflow_name.title()}]({workflow_name.upper()}.md)")
+
+    rendered_template = render_jinja_template('../.github/PAGES_INDEX.md.j2', {'WORKFLOW_LINKS': '\n'.join(links)})
 
     with open(os.path.join(docs_folder, 'index.md'), 'w') as w:
-        w.write('\n'.join(lines))
+        w.write(rendered_template)
 
 
 def create_markdown_doc(name, docs_folder, workflow_doc, functions):
@@ -209,7 +219,7 @@ def create_markdown_doc(name, docs_folder, workflow_doc, functions):
 
         if file_docs.get('full_example'):
             lines.append('\n## Full Example Pipeline')
-            lines.append(f"\n```yaml\n{to_yaml(file_docs.get('full_example'))}```")
+            lines.append(f"\n```yaml\n{file_docs.get('full_example')}\n```")
 
         if file_docs.get('additional_resources'):
             lines.append('\n## Additional Resources\n')
@@ -232,7 +242,7 @@ def entry_point():
         parser.print_usage()
         exit(1)
 
-    path = os.path.join(os.path.dirname(sys.argv[0]), '..')
+    path = os.path.join(SCRIPT_PATH, '..')
     groovy_files = [x for x in os.listdir(path) if x.endswith('.groovy')]
     for fil in groovy_files:
         if fil.startswith('example'):

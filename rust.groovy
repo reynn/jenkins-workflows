@@ -21,7 +21,7 @@ tools:
     name: command
     description: Which cargo command to execute.
     default: build
-full_example:
+full_example: |
   pipelines:
     tools:
       branches:

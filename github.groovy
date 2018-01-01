@@ -16,7 +16,7 @@ tools:
   - type: Map
     name: credentials
     section: github
-full_example:
+full_example: |
   pipelines:
     tools:
       branches:

@@ -28,7 +28,7 @@ tools:
     name: arguments
     description: List of arguments to the script, should include any flags if needed.
     required: false
-full_example:
+full_example: |
   pipelines:
     tools:
       python:

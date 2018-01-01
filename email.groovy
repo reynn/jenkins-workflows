@@ -38,7 +38,7 @@ tools:
   - type: String
     name: replyTo
     description: Reply-To email address.
-full_example:
+full_example: |
   pipelines:
     tools:
       email:

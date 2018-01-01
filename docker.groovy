@@ -8,7 +8,7 @@ additional_resources:
     url: https://docs.docker.com/engine/reference/commandline/build/
   - name: Docker push documentation
     url: https://docs.docker.com/engine/reference/commandline/push/
-full_example:
+full_example: |
   pipelines:
     tools:
       docker:

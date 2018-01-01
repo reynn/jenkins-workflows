@@ -78,7 +78,7 @@ tools:
     section: golang
     default: ${resultsPath}/*.xml
     description: An ant style pattern for the junit plugin, should match where your test results get stored.
-full_example:
+full_example: |
   pipelines:
     tools:
       branches:

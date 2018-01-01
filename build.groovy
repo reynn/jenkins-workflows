@@ -22,7 +22,7 @@ tools:
     section: mage
     default: '.'
     description: The directory containing your magefile.
-full_example:
+full_example: |
   pipelines:
     tools:
       mage:
