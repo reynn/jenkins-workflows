@@ -137,8 +137,9 @@ public createPullRequest(Map yml, Map args) {
   } catch (Exception e) {
     error("""|Failed to create pull request.
             |---------------------
-            |Error returned:
-            |${e}""".stripMargin())
+            |Error returned: $e
+            |---------------------
+            |${concurPipeline.getJavaStackTrace(e)}""".stripMargin())
   }
 }
 
