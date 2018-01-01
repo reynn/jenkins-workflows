@@ -36,12 +36,24 @@ tools:
     name: buildArgs
     section: docker
     description: A map of arguments to pass to docker build command, equivalent to `--build-arg <key>=<value>`.
+  - type: String
+    name: uri
+    section: docker
+    description: The uri of the registry to push to, such as quay.io, if not provided it will generally push to Docker hub.
+  - type: List
+    name: additionalTags
+    section: docker
+    description: A list of tags to push in addition to `imageTag` above.
+  - type: Map
+    name: credentials
+    section: docker
+    description: A map of criteria to use to search for your credential.
 full_example: |
   pipelines:
     tools:
       docker:
         credentials:
-          description: example docker creds
+          description: example docker creds.
       branches:
         patterns:
           feature: .+
@@ -65,7 +77,7 @@ concurUtil      = new com.concur.Util()
 concurGit       = new com.concur.Git()
 
 /*
-description: Build a Docker image
+description: Build a Docker image.
 parameters:
   - type: String
     name: dockerfile
@@ -164,7 +176,7 @@ parameters:
     description: A list of tags to push in addition to `imageTag` above.
   - name: credentials
     type: Map
-    description: A map of criteria to use to search for your credential
+    description: A map of criteria to use to search for your credential.
 example:
   branches:
     feature:
@@ -175,7 +187,7 @@ example:
             # Advanced
             - push:
                 credentials:
-                  description: example docker creds
+                  description: example docker creds.
                 additionalTags:
                   - "{{ git_commit }}"
  */
@@ -204,7 +216,7 @@ public push(Map yml, Map args) {
        |tools:
        |  docker:
        |    credentials:
-       |      description: example docker credentials""".stripMargin()
+       |      description: example docker credentials""".stripMargin().
     dockerCredentialId = concurPipeline.getCredentialsWithCriteria(credentials).id
   }
 

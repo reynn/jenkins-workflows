@@ -14,12 +14,12 @@ tools:
   - type: String
     section: git.commit
     name: pattern
-    description: Pattern for the `git add` command
+    description: Pattern for the `git add` command.
     default: "."
   - type: String
     section: git.commit
     name: author
-    description: Author of this commit
+    description: Author of this commit.
     default: ${env.GIT_AUTHOR} <${env.GIT_EMAIL}>
   - type: Boolean
     section: git.commit
@@ -66,11 +66,11 @@ parameters:
     default: "Automatic commit from {{ job_url }}"
   - type: String
     name: pattern
-    description: Pattern for the `git add` command
+    description: Pattern for the `git add` command.
     default: "."
   - type: String
     name: author
-    description: Author of this commit
+    description: Author of this commit in standard git format `Name <email@domain.com>`.
     default: ${env.GIT_AUTHOR} <${env.GIT_EMAIL}>
   - type: Boolean
     name: amend

@@ -20,7 +20,7 @@ tools:
     default: "{{ build_version }}"
   - type: String
     name: name
-    description: The name of the output package, format will be <name>-<version>.<target>
+    description: The name of the output package, format will be <name>-<version>.<target>.
     default: <repo>
   - type: String
     name: sourceDir
@@ -71,11 +71,11 @@ parameters:
     default: dir
   - type: String
     name: version
-    description: Version number to use for the resulting package, eqivalent to 
+    description: Version number to use for the resulting package, eqivalent to the `-v` flag.
     default: "{{ build_version }}"
   - type: String
     name: name
-    description: The name of the output package, format will be <name>-<version>.<target>
+    description: The name of the output package, format will be <name>-<version>.<target>.
     default: <repo>
   - type: String
     name: sourceDir

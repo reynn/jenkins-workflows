@@ -5,17 +5,23 @@ overview: Steps for interacting with GitHub.
 additional_resources:
   - name: GitHub API
     url: https://developer.github.com
+  - name: GitHub PR and Issue Templates
+    url: https://github.com/blog/2111-issue-and-pull-request-templates
 tools:
   - type: String
     name: patterns.master
     section: branches
+    description: The branch the PR will be merged into, also referred to as baseRef.
     default: master
   - type: String
     name: host
+    description: The URL for the API for the GitHub instance.
+    default: determined by SCM config.
     section: github
   - type: Map
     name: credentials
     section: github
+    description: Credentials to use when authenticating against the GitHub instance.
 full_example: |
   pipelines:
     tools:
@@ -42,11 +48,11 @@ parameters:
   - type: String
     name: fromBranch
     default: <branch_name>
-    description: The branch the PR will be merged from.
+    description: The branch the PR will be merged from, also referred to as headRef.
   - type: String
     name: toBranch
     default: master
-    description: The branch the PR will be merged into.
+    description: The branch the PR will be merged into, also referred to as baseRef.
   - type: String
     name: githubHost
     default: determined by SCM config.
@@ -61,7 +67,7 @@ parameters:
   - type: String
     name: repo
     default: determined by SCM config.
-    description: The name of the repo for the 
+    description: The name of the repo for to create PR for.
   - type: String
     name: title
     default: Merge {{ from_branch }} into {{ target_branch }}

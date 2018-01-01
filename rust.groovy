@@ -10,6 +10,7 @@ additional_resources:
 tools:
   - type: String
     name: buildImage
+    required: true
     description: Docker image containg tools for Rust.
   - type: List
     name: additionalArgs

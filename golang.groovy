@@ -57,7 +57,7 @@ tools:
   - type: List
     name: additionalArgs
     section: test
-    description: Additional arguments to the test binary specified
+    description: Additional arguments to the test binary specified.
   - type: String
     name: binary
     section: test
