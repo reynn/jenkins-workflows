@@ -6,12 +6,12 @@
 
 ## Tools Section
 
-| Name           | Type   | Default   | Description                                              |
-|:---------------|:-------|:----------|:---------------------------------------------------------|
-| buildImage     | String |           | Docker image containg tools for Rust.                    |
-| additionalArgs | List   |           | A list of additional flags to send to the cargo command. |
-| components     | List   |           | Additional rustup components to install.                 |
-| command        | String | `build`   | Which cargo command to execute.                          |
+| Name           | Required   | Type   | Default   | Description                                              |
+|:---------------|:-----------|:-------|:----------|:---------------------------------------------------------|
+| buildImage     | Required   | String |           | Docker image containg tools for Rust.                    |
+| additionalArgs |            | List   |           | A list of additional flags to send to the cargo command. |
+| components     |            | List   |           | Additional rustup components to install.                 |
+| command        |            | String | `build`   | Which cargo command to execute.                          |
 
 ## Available Methods
 

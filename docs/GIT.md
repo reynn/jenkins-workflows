@@ -9,8 +9,8 @@
 | Name        | Type    | Default                                | Section    | Description                                    |
 |:------------|:--------|:---------------------------------------|:-----------|:-----------------------------------------------|
 | message     | String  | `Automatic commit from {{ job_url }}`  | git.commit | The message to attach to the commit.           |
-| pattern     | String  | `.`                                    | git.commit | Pattern for the `git add` command              |
-| author      | String  | `${env.GIT_AUTHOR} <${env.GIT_EMAIL}>` | git.commit | Author of this commit                          |
+| pattern     | String  | `.`                                    | git.commit | Pattern for the `git add` command.             |
+| author      | String  | `${env.GIT_AUTHOR} <${env.GIT_EMAIL}>` | git.commit | Author of this commit.                         |
 | amend       | Boolean | `False`                                | git.commit | Whether to amend the previous commit.          |
 | push        | Boolean | `True`                                 | git.commit | Push the commit to git as well.                |
 | credentials | Map     |                                        | git.commit | Credentials to use when pushing to git origin. |
@@ -21,14 +21,14 @@
 
 > Execute an Ansible playbook
 
-| Name        | Type    | Default                                | Description                                    |
-|:------------|:--------|:---------------------------------------|:-----------------------------------------------|
-| message     | String  | `Automatic commit from {{ job_url }}`  | The message to attach to the commit.           |
-| pattern     | String  | `.`                                    | Pattern for the `git add` command              |
-| author      | String  | `${env.GIT_AUTHOR} <${env.GIT_EMAIL}>` | Author of this commit                          |
-| amend       | Boolean | `False`                                | Whether to amend the previous commit.          |
-| push        | Boolean | `True`                                 | Push the commit to git as well.                |
-| credentials | Map     |                                        | Credentials to use when pushing to git origin. |
+| Name        | Type    | Default                                | Description                                                             |
+|:------------|:--------|:---------------------------------------|:------------------------------------------------------------------------|
+| message     | String  | `Automatic commit from {{ job_url }}`  | The message to attach to the commit.                                    |
+| pattern     | String  | `.`                                    | Pattern for the `git add` command.                                      |
+| author      | String  | `${env.GIT_AUTHOR} <${env.GIT_EMAIL}>` | Author of this commit in standard git format `Name <email@domain.com>`. |
+| amend       | Boolean | `False`                                | Whether to amend the previous commit.                                   |
+| push        | Boolean | `True`                                 | Push the commit to git as well.                                         |
+| credentials | Map     |                                        | Credentials to use when pushing to git origin.                          |
 
 ### commit Example
 
