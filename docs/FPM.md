@@ -10,7 +10,7 @@
 |:-------------|:-----------|:-------|:----------------------|:------------------------------------------------------------------------------------|
 | buildImage   | Required   | String |                       | Docker image containing the FPM tools as well as any other requirements.            |
 | sourceType   |            | String | `dir`                 | Refer to [Sources documentation](http://fpm.readthedocs.io/en/latest/sources.html). |
-| version      |            | String | `{{ build_version }}` | Version number to use for the resulting package, eqivalent to                       |
+| version      |            | String | `{{ build_version }}` | Version number to use for the resulting package, eqivalent to the `-v` flag.        |
 | name         |            | String | `<repo>`              | The name of the output package, format will be <name>-<version>.<target>            |
 | sourceDir    |            | String |                       | When using the dir sourceType this is the directory that will get packaged.         |
 | extraArgs    |            | String |                       | Any extra arguments to the FPM command.                                             |
@@ -53,22 +53,22 @@ branches:
 
 ```yaml
 pipelines:
-  branches:
-    feature:
-      steps:
-      - fpm:
-        - package:
-            targetTypes:
-            - deb
-            - rpm
-      - artifactory:
-        - publish:
   tools:
     branches:
       patterns:
+        master: master
         develop: develop
         feature: .+
-        master: master
+  branches:
+    feature:
+      steps:
+        - fpm:
+          - package:
+              targetTypes:
+                - deb
+                - rpm
+        - artifactory:
+          - publish:
 ```
 
 ## Additional Resources

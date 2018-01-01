@@ -53,30 +53,28 @@ branches:
 
 ```yaml
 pipelines:
-  branches:
-    feature:
-      steps:
-      - custom:
-        - buildPackage:
-      - email:
-        - send:
-            body: Deployment to staging successful for branch {{ branch_name }} |
-              {{ build_url }}
-            to: team@domain.com
-    master:
-      steps:
-      - email:
-        - send:
-            body: Merge to master successful, deployment successful | {{ build_url
-              }}
-            to: team@domain.com
   tools:
-    branches:
-      patterns:
-        feature: .+
     email:
       cc: cc-example@domain.com
       replyTo: repyto@domain.com
+    branches:
+      patterns:
+        feature: .+
+  branches:
+    feature:
+      steps:
+        - custom: # This should be your build process
+          - buildPackage:
+        - email:
+          - send:
+              to: team@domain.com
+              body: "Deployment to staging successful for branch {{ branch_name }} | {{ build_url }}"
+    master:
+      steps:
+        - email:
+          - send: 
+              to: team@domain.com
+              body: "Merge to master successful, deployment successful | {{ build_url }}"
 ```
 
 ## Additional Resources

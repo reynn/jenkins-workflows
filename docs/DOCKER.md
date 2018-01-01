@@ -1,5 +1,16 @@
 # Docker
 
+## Tools Section
+
+| Name        | Type   | Default                                   | Section   | Description                                                                                                |
+|:------------|:-------|:------------------------------------------|:----------|:-----------------------------------------------------------------------------------------------------------|
+| dockerfile  | String |                                           | docker    | Path to a dockerfile to build, equivalent to `-f <dockerfile>`.                                            |
+| imageName   | String | `<git_org>/<git_repo>`                    | docker    | What to name the image, equivalent to `-t <imageName>`.                                                    |
+| imageTag    | String | `buildVersion`                            | docker    | What to name the image, equivalent to `-t <imageName>:<imageTag>`.                                         |
+| contextPath | String | `.`                                       | docker    | Path to the directory to start the Docker build, equivalent to the final argument to docker build command. |
+| uri         | String | `https://<git_host>/<git_org>/<git_repo>` | github    |                                                                                                            |
+| buildArgs   | Map    |                                           | docker    | A map of arguments to pass to docker build command, equivalent to `--build-arg <key>=<value>`.             |
+
 ## Available Methods
 
 ### build
@@ -13,7 +24,7 @@
 | imageTag    | String | `buildVersion`                            | What to name the image, equivalent to `-t <imageName>:<imageTag>`.                                         |
 | contextPath | String | `.`                                       | Path to the directory to start the Docker build, equivalent to the final argument to docker build command. |
 | vcsUrl      | String | `https://<git_host>/<git_org>/<git_repo>` |                                                                                                            |
-| buildArgs   | Map    |                                           | A map of arguments to pass to docker build command, equivalent to `--build-arg <key>=<value>`              |
+| buildArgs   | Map    |                                           | A map of arguments to pass to docker build command, equivalent to `--build-arg <key>=<value>`.             |
 
 ### build Example
 
@@ -62,26 +73,26 @@ branches:
 
 ```yaml
 pipelines:
-  branches:
-    feature:
-      steps:
-      - docker:
-        - build:
-            buildArgs:
-              BuildDate: '{{ timestamp }}'
-              BuildVersion: '{{ build_version }}'
-              CommitSha: '{{ git_commit }}'
-        - push:
-            additionalTags:
-            - '{{ git_commit }}'
   tools:
-    branches:
-      patterns:
-        feature: .+
     docker:
       credentials:
         description: example docker creds
-      dockerfile: production.dockerfile
+    branches:
+      patterns:
+        feature: .+
+  branches:
+    feature:
+      steps:
+        - docker: # This should be your build process
+          - build:
+              dockerfile: production.dockerfile
+              buildArgs:
+                CommitSha: "{{ git_commit }}"
+                BuildDate: "{{ timestamp }}"
+                BuildVersion: "{{ build_version }}"
+          - push:
+              additionalTags:
+                - "{{ git_commit }}"
 ```
 
 ## Additional Resources

@@ -8,8 +8,8 @@
 
 | Name        | Type   | Default   | Section   | Description                             |
 |:------------|:-------|:----------|:----------|:----------------------------------------|
-| buildImage  | String |           | mage      | Docker image that has Mage installed    |
-| target      | String |           | mage      | The mage target                         |
+| buildImage  | String |           | mage      | Docker image that has Mage installed.   |
+| target      | String |           | mage      | The mage target to execute.             |
 | mageFileDir | String | `.`       | mage      | The directory containing your magefile. |
 
 ## Available Methods
@@ -20,8 +20,8 @@
 
 | Name        | Type   | Default   | Description                             |
 |:------------|:-------|:----------|:----------------------------------------|
-| buildImage  | String |           | Docker image that has Mage installed    |
-| target      | String |           | The mage target                         |
+| buildImage  | String |           | Docker image that has Mage installed.   |
+| target      | String |           | The mage target to execute.             |
 | mageFileDir | String | `.`       | The directory containing your magefile. |
 
 ### mage Example
@@ -40,20 +40,20 @@ branches:
 
 ```yaml
 pipelines:
-  branches:
-    feature:
-      steps:
-      - build:
-        - mage:
-      - build:
-        - mage:
-            target: Docker
   tools:
+    mage:
+      buildImage: "quay.io/example/mage"
     branches:
       patterns:
         feature: .+
-    mage:
-      buildImage: quay.io/example/mage
+  branches:
+    feature:
+      steps:
+        - build:
+          - mage:
+        - build:
+          - mage:
+              target: Docker
 ```
 
 ## Additional Resources

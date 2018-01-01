@@ -139,24 +139,24 @@ branches:
 
 ```yaml
 pipelines:
-  branches:
-    feature:
-      steps:
-      - golang:
-        - glide:
-        - test:
-            binary: ginkgo
-            gatherJunit: true
-        - build:
-            env:
-              GOARCH: amd64
-              GOOS: darwin
-            mainPath: cmd/app/main.go
-            outFile: publish/app
   tools:
     branches:
       patterns:
         feature: .+
+  branches:
+    feature:
+      steps:
+        - golang:
+          - glide:
+          - test:
+              binary: ginkgo
+              gatherJunit: true
+          - build:
+              mainPath: cmd/app/main.go
+              outFile: publish/app
+              env:
+                GOOS: darwin
+                GOARCH: amd64
 ```
 
 ## Additional Resources

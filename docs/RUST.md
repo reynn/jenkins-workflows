@@ -43,16 +43,16 @@ branches:
 
 ```yaml
 pipelines:
-  branches:
-    feature:
-      steps:
-      - rust:
-        - cargo:
-            command: build
   tools:
     branches:
       patterns:
         feature: .+
+  branches:
+    feature:
+      steps:
+        - rust:
+          - cargo:
+              command: build
 ```
 
 ## Additional Resources

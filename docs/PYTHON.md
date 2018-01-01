@@ -45,18 +45,18 @@ branches:
 
 ```yaml
 pipelines:
-  branches:
-    feature:
-      steps:
-      - python:
-        - script:
-            file: scripts/build.py
   tools:
+    python:
+      buildImage: "python:3.6-alpine3.7"
     branches:
       patterns:
         feature: .+
-    python:
-      buildImage: python:3.6-alpine3.7
+  branches:
+    feature:
+      steps:
+        - python:
+          - script:
+              file: scripts/build.py
 ```
 
 ## Additional Resources

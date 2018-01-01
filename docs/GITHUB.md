@@ -48,17 +48,17 @@ branches:
 
 ```yaml
 pipelines:
-  branches:
-    feature:
-      steps:
-      - github:
-        - createPullRequest:
   tools:
     branches:
       patterns:
+        master: master
         develop: develop
         feature: .+
-        master: master
+  branches:
+    feature:
+      steps:
+        - github:
+          - createPullRequest:
 ```
 
 ## Additional Resources
