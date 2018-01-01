@@ -131,8 +131,6 @@ public createPullRequest(Map yml, Map args) {
   concurPipeline.debugPrint('Workflow :: GitHub :: createPullRequest', ['pullRequestResult': pullRequestResult])
   if (pullRequestResult instanceof List) {
     println "A pull request already existed and can be viewed at ${pullRequestResult[0].url}."
-  } else {
-    println "Created pull request created and can be viewed at ${pullRequestResult.url}."
   }
 }
 
