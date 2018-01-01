@@ -30,4 +30,3 @@ pipelines:
               message: "Automatic documentation generated."
               push: true
               forceAdd: true
-              forcePush: true
