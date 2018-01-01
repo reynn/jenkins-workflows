@@ -5,14 +5,14 @@ The goal is to help developers more quickly and easily take advantage of Jenkins
 
 ## Available Workflows
 
-* [Docker](DOCKER.md)
-* [Email](EMAIL.md)
-* [Git](GIT.md)
-* [Rust](RUST.md)
-* [Example](EXAMPLE.md)
-* [Fpm](FPM.md)
-* [Python](PYTHON.md)
-* [Golang](GOLANG.md)
-* [Github](GITHUB.md)
 * [Ansible](ANSIBLE.md)
 * [Build](BUILD.md)
+* [Docker](DOCKER.md)
+* [Email](EMAIL.md)
+* [Example](EXAMPLE.md)
+* [Fpm](FPM.md)
+* [Git](GIT.md)
+* [Github](GITHUB.md)
+* [Golang](GOLANG.md)
+* [Python](PYTHON.md)
+* [Rust](RUST.md)
