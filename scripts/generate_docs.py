@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import textwrap
 import yaml
 
 from argparse import ArgumentParser
@@ -165,6 +166,21 @@ def create_markdown_table(values):
     return tabulate(rows, [x.title() for x in columns], tablefmt="pipe")
 
 
+def create_index_markdown(groovy_files, docs_folder):
+    print('Generating index.md ...')
+    lines = []
+    lines.append('# Welcome to Workflows for Jenkins\n')
+    lines.append('These workflows were originally created by the Workflow team at Concur.')
+    lines.append('The goal is to help developers more quickly and easily take advantage of Jenkins pipelines without the need to write complex Jenkinsfiles.')
+    lines.append('\n## Available Workflows\n')
+    for groovy_file in groovy_files:
+        workflow_name = os.path.splitext(groovy_file)[0]
+        lines.append(f"* [{workflow_name.title()}]({workflow_name.upper()}.md)")
+
+    with open(os.path.join(docs_folder, 'INDEX.md'), 'w') as w:
+        w.write('\n'.join(lines))
+
+
 def create_markdown_doc(name, docs_folder, workflow_doc, functions):
     if not os.path.exists(docs_folder):
         os.mkdir(docs_folder)
@@ -217,7 +233,8 @@ def entry_point():
         exit(1)
 
     path = os.path.join(os.path.dirname(sys.argv[0]), '..')
-    for fil in [x for x in os.listdir(path) if x.endswith('.groovy')]:
+    groovy_files = [x for x in os.listdir(path) if x.endswith('.groovy')]
+    for fil in groovy_files:
         if fil.startswith('example'):
             continue
         with open(os.path.join(path, fil)) as groovy_file:
@@ -229,6 +246,7 @@ def entry_point():
                                 docs_folder=os.path.join(path, args.out_path),
                                 workflow_doc=workflow_doc,
                                 functions=functions)
+    create_index_markdown(groovy_files, os.path.join(path, args.out_path))
 
 
 if __name__ == '__main__':
