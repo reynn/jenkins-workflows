@@ -9,7 +9,6 @@ The goal is to help developers more quickly and easily take advantage of Jenkins
 * [Build](BUILD.md)
 * [Docker](DOCKER.md)
 * [Email](EMAIL.md)
-* [Example](EXAMPLE.md)
 * [Fpm](FPM.md)
 * [Git](GIT.md)
 * [Github](GITHUB.md)
