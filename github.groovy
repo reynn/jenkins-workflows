@@ -201,7 +201,6 @@ public createRelease(Map yml, Map args) {
 
   assert releaseName  : 'Workflows :: github :: createRelease :: [releaseName] not provided as an argument to this step.'
   assert tagName      : 'Workflows :: github :: createRelease :: [tagName] not provided as an argument to this step.'
-  assert releaseNotes : 'Workflows :: github :: createRelease :: [releaseNotes] not provided as an argument to this step.'
 
   Map changelogReleases = concurUtil.parseChangelog(changelogFile, versionSeperator)
 

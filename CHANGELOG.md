@@ -2,7 +2,7 @@
 
 ## 0.1.0
 
-### New Workflows
+### Added
 
 Please view the associated documentation on how to use these workflows, or visit [GitHub pages](https://reynn.github.io/jenkins-workflows/) generated documentation.
 
