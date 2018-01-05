@@ -191,8 +191,8 @@ example:
 public createRelease(Map yml, Map args) {
   String genVersion = concurGit.getVersion().split('-')[0]
 
-  String changelogFile    = args?.changelogFile ?: yml.tools?.github?.changelog.file      ?: 'CHANGELOG.md'
-  String versionSeperator = args?.separator     ?: yml.tools?.github?.changelog.separator ?: '##'
+  String changelogFile    = args?.changelogFile ?: yml.tools?.github?.changelog?.file      ?: 'CHANGELOG.md'
+  String versionSeperator = args?.separator     ?: yml.tools?.github?.changelog?.separator ?: '##'
   String releaseName      = args?.name          ?: genVersion
   String tagName          = args?.tag           ?: genVersion
   String releaseNotes     = args?.notes
