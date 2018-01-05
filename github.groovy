@@ -7,6 +7,8 @@ additional_resources:
     url: https://developer.github.com
   - name: GitHub PR and Issue Templates
     url: https://github.com/blog/2111-issue-and-pull-request-templates
+  - name: Keep a Changelog
+    url: http://keepachangelog.com/en/1.0.0/
 tools:
   - type: String
     name: patterns.master
@@ -22,6 +24,16 @@ tools:
     name: credentials
     section: github
     description: Credentials to use when authenticating against the GitHub instance.
+  - type: String
+    name: changelogFile
+    section: github.changelog
+    default: 'CHANGELOG.md'
+    description: Name or path to your changelog file, typically this should be a file called CHANGELOG.md in the root of your project.
+  - type: String
+    name: separator
+    section: github.changelog
+    default: '##'
+    description: Should match what the header for your releases are, and it should be consistent for all releases.
 full_example: |
   pipelines:
     tools:
@@ -140,8 +152,62 @@ public createPullRequest(Map yml, Map args) {
   }
 }
 
+/*
+description: Create a release with notes from a CHANGELOG.md
+parameters:
+  - type: String
+    name: changelogFile
+    default: 'CHANGELOG.md'
+    description: Name or path to your changelog file, typically this should be a file called CHANGELOG.md in the root of your project.
+  - type: String
+    name: separator
+    default: '##'
+    description: Should match what the header for your releases are, and it should be consistent for all releases.
+  - type: String
+    name: name
+    default: genVersion
+    description: The display name of the release in GitHub.
+  - type: String
+    name: tag
+    default: genVersion
+    description: The Git tag that will be created for this release.
+  - type: String
+    name: notes
+    description: Optionally provide the notes directly in pipelines.yml, not recommended.
+example:
+  branches:
+    feature:
+      steps:
+        - github:
+            # Simple
+            - createRelease:
+            # Advanced
+            - createRelease:
+                name: 0.1.0-alpha
+                notes: |
+                  ### New Features
+                  * Pipeline execution
+ */
 public createRelease(Map yml, Map args) {
+  String genVersion = concurGit.getVersion().split('-')[0]
 
+  String changelogFile    = args?.changelogFile ?: yml.tools?.github?.changelog.file      ?: 'CHANGELOG.md'
+  String versionSeperator = args?.separator     ?: yml.tools?.github?.changelog.separator ?: '##'
+  String releaseName      = args?.name          ?: genVersion
+  String tagName          = args?.tag           ?: genVersion
+  String releaseNotes     = args?.notes
+  Boolean preRelease      = args?.preRelease    ?: false
+  Boolean draft           = args?.draft         ?: false
+
+  assert releaseName  : 'Workflows :: github :: createRelease :: [releaseName] not provided as an argument to this step.'
+  assert tagName      : 'Workflows :: github :: createRelease :: [tagName] not provided as an argument to this step.'
+  assert releaseNotes : 'Workflows :: github :: createRelease :: [releaseNotes] not provided as an argument to this step.'
+
+  Map changelogReleases = concurUtil.parseChangelog(changelogFile, versionSeperator)
+
+  changelogReleases.each { release ->
+    println "Found release :: $release"
+  }
 }
 
 /*

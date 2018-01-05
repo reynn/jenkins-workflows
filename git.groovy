@@ -118,7 +118,7 @@ public commit(Map yml, Map args) {
           gitCmd = """git config user.name '$author' \
               && git config user.email '$email' \
               && git config push.default simple \
-              && git remote set-url origin "https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_HOST}/${env.GIT_ORG}/${env.GIT_REPO}.git" \
+              && git remote set-url origin "https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_HOST}/${env.GIT_OWNER}/${env.GIT_REPO}.git" \
               && git add ${forceAdd ? '-f' : ''} $pattern \
               && git commit ${amend ? '--amend' : ''} -m \"$message\" \
               && git push ${forcePush ? '-f' : ''} origin HEAD:${env.BRANCH_NAME}"""
@@ -144,7 +144,7 @@ public commit(Map yml, Map args) {
           gitCmd = """git config user.name '$author' \
               && git config user.email '$email' \
               && git config push.default simple \
-              && git remote set-url origin "git@${env.GIT_HOST}:${env.GIT_ORG}/${env.GIT_REPO}.git" \
+              && git remote set-url origin "git@${env.GIT_HOST}:${env.GIT_OWNER}/${env.GIT_REPO}.git" \
               && git add ${forceAdd ? '-f' : ''} $pattern \
               && git commit ${amend ? '--amend' : ''} -m \"$message\" \
               && GIT_SSH_COMMAND='ssh -i ${env.GIT_SSH_KEY_FILE}' git push ${forcePush ? '-f' : ''} origin HEAD:${env.BRANCH_NAME}"""

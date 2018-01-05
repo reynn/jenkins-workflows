@@ -16,7 +16,7 @@ tools:
   - type: String
     name: imageName
     section: docker
-    default: "<git_org>/<git_repo>"
+    default: "<git_owner>/<git_repo>"
     description: What to name the image, equivalent to `-t <imageName>`.
   - type: String
     name: imageTag
@@ -31,7 +31,7 @@ tools:
   - type: String
     name: uri
     section: github
-    default: https://<git_host>/<git_org>/<git_repo>
+    default: https://<git_host>/<git_owner>/<git_repo>
   - type: Map
     name: buildArgs
     section: docker
@@ -84,7 +84,7 @@ parameters:
     description: Path to a dockerfile to build, equivalent to `-f <dockerfile>`.
   - type: String
     name: imageName
-    default: "<git_org>/<git_repo>"
+    default: "<git_owner>/<git_repo>"
     description: What to name the image, equivalent to `-t <imageName>`.
   - type: String
     name: imageTag
@@ -96,7 +96,7 @@ parameters:
     description: Path to the directory to start the Docker build, equivalent to the final argument to docker build command.
   - type: String
     name: vcsUrl
-    default: https://<git_host>/<git_org>/<git_repo>
+    default: https://<git_host>/<git_owner>/<git_repo>
   - type: Map
     name: buildArgs
     description: A map of arguments to pass to docker build command, equivalent to `--build-arg <key>=<value>`.
@@ -120,10 +120,10 @@ public build(Map yml, Map args) {
   String buildVersion = concurGit.getVersion(baseVersion)
 
   String dockerfile = args?.dockerfile            ?: yml.tools?.docker?.dockerfile
-  String imageName  = args?.imageName             ?: yml.tools?.docker?.imageName   ?: "${env.GIT_ORG}/${env.GIT_REPO}"
+  String imageName  = args?.imageName             ?: yml.tools?.docker?.imageName   ?: "${env.GIT_OWNER}/${env.GIT_REPO}"
   String imageTag   = args?.imageTag              ?: yml.tools?.docker?.imageTag    ?: buildVersion
   String context    = args?.contextPath           ?: yml.tools?.docker?.contextPath ?: "."
-  String vcsUrl     = args?.vcsUrl                ?: yml.tools?.github?.uri         ?: "https://${GIT_HOST}/${env.GIT_ORG}/${env.GIT_REPO}"
+  String vcsUrl     = args?.vcsUrl                ?: yml.tools?.github?.uri         ?: "https://${GIT_HOST}/${env.GIT_OWNER}/${env.GIT_REPO}"
   Map buildArgs     = args?.buildArgs             ?: yml.tools?.docker?.buildArgs   ?: [:]
 
   String additionalArgs = ""
@@ -162,7 +162,7 @@ description: Push a Docker image to a remote registry.
 parameters:
   - name: imageName
     type: String
-    default: "<git_org>/<git_repo>"
+    default: "<git_owner>/<git_repo>"
     description: The name of the image to push.
   - name: imageTag
     type: String
@@ -194,7 +194,7 @@ example:
 public push(Map yml, Map args) {
   String baseVersion    = yml.general?.version?.base ?: "0.1.0"
   String buildVersion   = concurGit.getVersion(baseVersion)
-  String imageName      = args?.imageName      ?: yml.tools?.docker?.imageName      ?: "${env.GIT_ORG}/${env.GIT_REPO}"
+  String imageName      = args?.imageName      ?: yml.tools?.docker?.imageName      ?: "${env.GIT_OWNER}/${env.GIT_REPO}"
   String imageTag       = args?.imageTag       ?: yml.tools?.docker?.imageTag       ?: buildVersion
   String dockerEndpoint = args?.uri            ?: yml.tools?.docker?.uri            ?: env.DOCKER_URI
   List additionalTags   = args?.additionalTags ?: yml.tools?.docker?.additionalTags ?: []

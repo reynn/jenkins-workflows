@@ -445,7 +445,7 @@ public test(Map yml, Map args) {
 }
 
 private getGoPath() {
-  return "/go/src/${GIT_HOST}/${env.GIT_ORG}/${env.GIT_REPO}"
+  return "/go/src/${GIT_HOST}/${env.GIT_OWNER}/${env.GIT_REPO}"
 }
 
 private runCommandInDockerImage(String dockerImage, String goPath, Closure work) {
