@@ -171,6 +171,12 @@ parameters:
     name: tag
     default: genVersion
     description: The Git tag that will be created for this release.
+  - type: Boolean
+    name: preRelease
+    description: Mark the release as a pre-release.
+  - type: Boolean
+    name: draft
+    description: Mark the release as a draft.
   - type: String
     name: notes
     description: Optionally provide the notes directly in pipelines.yml, not recommended.
@@ -191,6 +197,7 @@ example:
 public createRelease(Map yml, Map args) {
   String genVersion = concurGit.getVersion().split('-')[0]
 
+  Map credentials         = args?.credentials   ?: yml.tools?.github?.credentials
   String changelogFile    = args?.changelogFile ?: yml.tools?.github?.changelog?.file      ?: 'CHANGELOG.md'
   String versionSeperator = args?.separator     ?: yml.tools?.github?.changelog?.separator ?: '##'
   String releaseName      = args?.name          ?: genVersion
@@ -199,14 +206,40 @@ public createRelease(Map yml, Map args) {
   Boolean preRelease      = args?.preRelease    ?: false
   Boolean draft           = args?.draft         ?: false
 
-  assert releaseName  : 'Workflows :: github :: createRelease :: [releaseName] not provided as an argument to this step.'
-  assert tagName      : 'Workflows :: github :: createRelease :: [tagName] not provided as an argument to this step.'
+  assert releaseName  : 'Workflows :: github :: createRelease :: [name] not provided as an argument to this step.'
+  assert tagName      : 'Workflows :: github :: createRelease :: [tag] not provided as an argument to this step.'
 
-  Map changelogReleases = concurUtil.parseChangelog(changelogFile, versionSeperator)
+  if (!releaseNotes) {
+    Map changelogReleases = concurUtil.parseChangelog(changelogFile, versionSeperator)
+    def thisRelease = changelogReleases.find { it.key.contains(releaseName) }
 
-  changelogReleases.each { release ->
-    println "Found release :: $release"
+    assert thisRelease : "Unable to find release $releaseName in the $changelogFile and no release notes are provided to the step."
+
+    releaseNotes = thisRelease.value.trim()
+
+    List rSplit = thisRelease.key.split()
+    String rVersion = rSplit[0]
+    if (rSplit.size() > 1) {
+      rSplit.each {
+        String element = it.toLowerCase()
+        if (element.contains('prerelease') || element.contains('pre-release')) {
+          preRelease = true
+        }
+        if (element.contains('draft')) {
+          draft = true
+        }
+      }
+    }
   }
+
+  println """Creating release
+  |-----------------------------
+  ||Release    | $releaseName  |
+  ||PreRelease | $preRelease   |
+  ||Draft      | $draft        |
+  """.stripMargin()
+  
+  concurGitHubApi.createRelease(credentials, releaseNotes, tagName, releaseName, preRelease, draft)
 }
 
 /*
