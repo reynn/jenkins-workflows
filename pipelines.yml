@@ -23,8 +23,8 @@ pipelines:
   branches:
     master:
       steps:
-        - example:
-          - work:
+        - github:
+          - createRelease:
     feature:
       steps:
         - python:

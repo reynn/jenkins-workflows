@@ -4,7 +4,7 @@
 
 ### Added
 
-Please view the associated documentation on how to use these workflows, or visit [GitHub pages](https://reynn.github.io/jenkins-workflows/) generated documentation.
+Please view the associated documentation on how to use these workflows, or visit [GitHub pages](https://concur.github.io/jenkins-workflows/) generated documentation.
 
 * [Ansible](docs/ANSIBLE.md)
 * [Build](docs/BUILD.md)
