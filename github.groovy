@@ -106,7 +106,7 @@ public createPullRequest(Map yml, Map args) {
   String toBranch     = args?.toBranch    ?: yml.tools?.branches?.patterns?.master  ?: 'master'
   String githubHost   = args?.host        ?: yml.tools?.github?.host
   Map credentials     = args?.credentials ?: yml.tools?.github?.credentials
-  String org          = args?.org         ?: gitData.org
+  String owner        = args?.owner       ?: gitData.owner
   String repo         = args?.repo        ?: gitData.repo
   String title        = args?.title       ?: "Merge {{ from_branch }} into {{ target_branch }}"
   String summary      = args?.summary     ?: "Created by job run {{ build_url }}."
@@ -122,7 +122,7 @@ public createPullRequest(Map yml, Map args) {
   concurPipeline.debugPrint('Workflow :: GitHub :: createPullRequest', [
     'fromBranch'    : fromBranch,
     'toBranch'      : toBranch,
-    'org'           : org,
+    'owner'         : owner,
     'repo'          : repo,
     'replaceOptions': replaceOptions,
     'title'         : title,
