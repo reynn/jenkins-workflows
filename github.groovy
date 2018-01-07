@@ -165,11 +165,11 @@ parameters:
     description: Should match what the header for your releases are, and it should be consistent for all releases.
   - type: String
     name: name
-    default: genVersion
+    default: Determined by last tag, prefixed with `v`
     description: The display name of the release in GitHub.
   - type: String
     name: tag
-    default: genVersion
+    default: Determined by last tag, prefixed with `v`
     description: The Git tag that will be created for this release.
   - type: Boolean
     name: preRelease
@@ -200,11 +200,12 @@ public createRelease(Map yml, Map args) {
   Map credentials         = args?.credentials   ?: yml.tools?.github?.credentials
   String changelogFile    = args?.changelogFile ?: yml.tools?.github?.changelog?.file      ?: 'CHANGELOG.md'
   String versionSeperator = args?.separator     ?: yml.tools?.github?.changelog?.separator ?: '##'
-  String releaseName      = args?.name          ?: genVersion
-  String tagName          = args?.tag           ?: genVersion
+  String releaseName      = args?.name          ?: "v$genVersion"
+  String tagName          = args?.tag           ?: "v$genVersion"
   String releaseNotes     = args?.notes
-  Boolean preRelease      = args?.preRelease    ?: false
-  Boolean draft           = args?.draft         ?: false
+
+  Boolean preRelease      = args?.preRelease == null ? false : args?.preRelease
+  Boolean draft           = args?.draft      == null ? false : args?.draft
 
   assert releaseName  : 'Workflows :: github :: createRelease :: [name] not provided as an argument to this step.'
   assert tagName      : 'Workflows :: github :: createRelease :: [tag] not provided as an argument to this step.'
@@ -250,7 +251,7 @@ public getStageName(Map yml, Map args, String stepName) {
     case 'createPullRequest':
       def fromBranch  = args?.fromBranch  ?: env.BRANCH_NAME
       def toBranch    = args?.toBranch    ?: yml.tools?.github?.master ?: 'master'
-      return (fromBranch && toBranch) ? "github: createPR: $fromBranch -> $toBranch" : 'github: createPR'
+      return (fromBranch && toBranch) ? "github: create pr: $fromBranch -> $toBranch" : 'github: create pr'
     case 'createRelease':
       return 'github: create release'
   }
