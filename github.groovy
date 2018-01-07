@@ -141,7 +141,7 @@ public createPullRequest(Map yml, Map args) {
   Map pullRequestResult = concurGitHubApi.createPullRequest(concurUtil.mustacheReplaceAll(title, replaceOptions),
                                                             fromBranch,
                                                             toBranch,
-                                                            org,
+                                                            owner,
                                                             repo,
                                                             githubHost,
                                                             credentials,
