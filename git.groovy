@@ -114,8 +114,8 @@ public commit(Map yml, Map args) {
     def credential = concurPipeline.getCredentialsWithCriteria(credentials)
     switch (credential.getClass()) {
       case com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl:
-        String httpsGitUrl = "https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_HOST}/${env.GIT_OWNER}/${env.GIT_REPO}.git"
         withCredentials([usernamePassword(credentialsId: credential.id, passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+          String httpsGitUrl = "https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_HOST}/${env.GIT_OWNER}/${env.GIT_REPO}.git"
           gitCmd = """git config user.name '$author' \
               && git config user.email '$email' \
               && git config push.default simple \
@@ -141,8 +141,8 @@ public commit(Map yml, Map args) {
         }
         break
       case com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey:
-        String sshGitUrl = "git@${env.GIT_HOST}:${env.GIT_OWNER}/${env.GIT_REPO}.git"
         withCredentials([sshUserPrivateKey(credentialsId: credential.id, keyFileVariable: 'GIT_SSH_KEY_FILE', passphraseVariable: 'GIT_SSH_PASSPHRASE', usernameVariable: 'GIT_SSH_USERNAME')]) {
+          String sshGitUrl = "git@${env.GIT_HOST}:${env.GIT_OWNER}/${env.GIT_REPO}.git"
           gitCmd = """git config user.name '$author' \
               && git config user.email '$email' \
               && git config push.default simple \
