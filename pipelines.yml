@@ -17,7 +17,7 @@ pipelines:
       binary: python3
     jenkins:
       workflows:
-        branch: master
+        branch: new-workflows
     slack:
       channel: git-notifications
   branches:
