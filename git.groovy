@@ -98,12 +98,13 @@ public commit(Map yml, Map args) {
   String pattern      = args?.pattern     ?: yml.tools?.git?.commit?.pattern      ?: '.'
   String author       = args?.author      ?: yml.tools?.git?.commit?.author       ?: env.GIT_AUTHOR
   String email        = args?.email       ?: yml.tools?.git?.commit?.email        ?: env.GIT_EMAIL
-  Boolean amend       = args?.amend       ?: yml.tools?.git?.commit?.amend        ?: false
-  Boolean forceAdd    = args?.forceAdd    ?: yml.tools?.git?.commit?.forceAdd     ?: false
-  Boolean forcePush   = args?.forcePush   ?: yml.tools?.git?.commit?.forcePush    ?: false
-  Boolean push        = args?.push        ?: yml.tools?.git?.commit?.push         ?: true
-  Boolean failOnError = args?.failOnError ?: yml.tools?.git?.commit?.failOnError  ?: false
   Map credentials     = args?.credentials ?: yml.tools?.git?.commit?.credentials  ?: yml.tools?.git?.credentials
+  // False and null are false for groovys booleans, so checking if null on both params and tools section before defaulting.
+  Boolean amend       = args?.amend       == null ? (yml.tools?.git?.commit?.amend       == null ? false : yml.tools?.git?.commit?.amend)       : args?.amend
+  Boolean forceAdd    = args?.forceAdd    == null ? (yml.tools?.git?.commit?.forceAdd    == null ? false : yml.tools?.git?.commit?.forceAdd)    : args?.forceAdd
+  Boolean forcePush   = args?.forcePush   == null ? (yml.tools?.git?.commit?.forcePush   == null ? false : yml.tools?.git?.commit?.forcePush)   : args?.forcePush
+  Boolean push        = args?.push        == null ? (yml.tools?.git?.commit?.push        == null ? true  : yml.tools?.git?.commit?.push)        : args?.push
+  Boolean failOnError = args?.failOnError == null ? (yml.tools?.git?.commit?.failOnError == null ? false : yml.tools?.git?.commit?.failOnError) : args?.failOnError
 
   String gitCmd = "git add $pattern && git commit"
 
