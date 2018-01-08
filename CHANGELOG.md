@@ -1,6 +1,14 @@
 # Jenkins Workflows
 
-## 0.1.1
+## v0.2.0
+
+### Added
+
+* Gradle workflow
+* Slack workflow
+* NodeJS workflow
+
+## v0.1.1
 
 ### Fixed
 
