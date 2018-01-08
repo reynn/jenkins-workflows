@@ -13,5 +13,7 @@ The goal is to help developers more quickly and easily take advantage of Jenkins
 * [Git](GIT.md)
 * [Github](GITHUB.md)
 * [Golang](GOLANG.md)
+* [Gradle](GRADLE.md)
 * [Python](PYTHON.md)
 * [Rust](RUST.md)
+* [Slack](SLACK.md)
