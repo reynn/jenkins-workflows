@@ -25,6 +25,9 @@ pipelines:
       steps:
         - github:
           - createRelease:
+        - slack:
+          - send:
+              message: "Version {{ short_version }} released."
     feature:
       steps:
         - python:
