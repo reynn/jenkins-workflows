@@ -99,7 +99,7 @@ public commit(Map yml, Map args) {
   String author       = args?.author      ?: yml.tools?.git?.commit?.author       ?: env.GIT_AUTHOR
   String email        = args?.email       ?: yml.tools?.git?.commit?.email        ?: env.GIT_EMAIL
   Boolean amend       = args?.amend       ?: yml.tools?.git?.commit?.amend        ?: false
-  Boolean forceAdd    = args?.force       ?: yml.tools?.git?.commit?.force        ?: false
+  Boolean forceAdd    = args?.forceAdd    ?: yml.tools?.git?.commit?.forceAdd     ?: false
   Boolean forcePush   = args?.forcePush   ?: yml.tools?.git?.commit?.forcePush    ?: false
   Boolean push        = args?.push        ?: yml.tools?.git?.commit?.push         ?: true
   Boolean failOnError = args?.failOnError ?: yml.tools?.git?.commit?.failOnError  ?: false
@@ -131,8 +131,7 @@ public commit(Map yml, Map args) {
             'amend'       : amend,
             'forceAdd'    : forceAdd,
             'push'        : push,
-            'credentials' : credentials,
-            'gitCmd'      : gitCmd
+            'credentials' : credentials
           ])
           def retCode = sh returnStatus: true, script: gitCmd
           if (failOnError && retCode > 0) {
@@ -158,8 +157,7 @@ public commit(Map yml, Map args) {
             'amend'       : amend,
             'forceAdd'    : forceAdd,
             'push'        : push,
-            'credentials' : credentials,
-            'gitCmd'      : gitCmd
+            'credentials' : credentials
           ])
           def retCode = sh returnStatus: true, script: gitCmd
           if (failOnError && retCode > 0) {
