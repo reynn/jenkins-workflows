@@ -2,6 +2,11 @@ import com.concur.*;
 
 workflowDoc = '''
 overview: Send messages to a Slack channel during a job run.
+additional_resources:
+  - name: Slack API
+    url: https://api.slack.com
+  - name: Jenkins Slack plugin GitHub
+    url: https://github.com/jenkinsci/slack-plugin
 tools:
   - name: channel
     type: String
