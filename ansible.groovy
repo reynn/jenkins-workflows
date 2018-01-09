@@ -5,6 +5,8 @@ overview: Execute Ansible playbooks within a pipeline.
 additional_resources:
   - name: Ansible
     url: https://docs.ansible.com/ansible/latest/playbooks.html
+  - name: Docker Images
+    url: https://hub.docker.com/ansible/ansible/
 tools:
   - type: String
     name: buildImage

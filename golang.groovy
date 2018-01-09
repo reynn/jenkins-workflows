@@ -9,6 +9,8 @@ additional_resources:
     url: https://github.com/tools/godep
   - name: Golang
     url: https://golang.org
+  - name: Docker Images
+    url: https://hub.docker.com/_/golang/
 tools:
   - type: String
     name: buildImage

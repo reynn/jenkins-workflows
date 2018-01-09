@@ -6,7 +6,7 @@ overview: Execute any Gradle task.
 additional_resources:
   - name: Gradle Official
     url: https://gradle.org
-  - name: Gradle Docker images
+  - name: Docker images
     url: https://hub.docker.com/_/gradle/
 tools:
   - type: String

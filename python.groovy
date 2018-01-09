@@ -3,7 +3,7 @@ import com.concur.*;
 workflowDoc = '''
 overview: Run Python scripts.
 additional_resources:
-  - name: Official Docker images
+  - name: Docker images
     url: https://hub.docker.com/_/python/
 tools:
   - type: String

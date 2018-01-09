@@ -7,6 +7,8 @@ additional_resources:
     url: https://www.rust-lang.org/en-US/
   - name: Cargo
     url: http://doc.crates.io
+  - name: Docker Images
+    url: https://hub.docker.com/_/rust/
 tools:
   - type: String
     name: buildImage

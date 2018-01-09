@@ -1,0 +1,155 @@
+import com.concur.*;
+
+concurPipeline  = new ConcurCommands()
+concurUtil      = new Util()
+
+workflowDoc = '''
+overview: Execute any NPM, Grunt or Gulp task.
+additional_resources:
+  - name: NodeJS Official Site
+    url: https://nodejs.org/en/
+  - name: NPM
+    url: https://www.npmjs.com
+  - name: Grunt
+    url: https://gruntjs.com
+  - name: Gulp
+    url: https://gulpjs.com
+  - name: Docker Images
+    url: https://hub.docker.com/_/node/
+tools:
+  - type: String
+    name: dockerImage
+    section: nodejs
+    description: Docker image to run all NodeJS commands in.
+  - type: List
+    name: commandArgs
+    section: nodejs.npm
+    description: Additional arguments to the NPM commands.
+  - type: String
+    name: command
+    section: nodejs.npm
+    description: The NPM command to run within a nodejs.npm workflow step.
+    default: install
+  - type: String
+    name: npmRegistry
+    section: nodejs.npm
+    description: URL to an alternate NPM registry.
+  - type: List
+    name: commandArgs
+    section: nodejs.gulp
+    description: Additional arguments to a Gulp command.
+  - type: String
+    name: command
+    section: nodejs.gulp
+    description: The Gulp command to run within a nodejs.gulp workflow step.
+    default: install
+  - type: List
+    name: commandArgs
+    section: nodejs.grunt
+    description: Additional arguments to a Grunt command.
+  - type: String
+    name: command
+    section: nodejs.grunt
+    description: The Grunt command to run within a nodejs.grunt workflow step.
+    default: install
+full_example: |
+  pipelines:
+    tools:
+      branches:
+        patterns:
+          feature: .+
+    tools:
+      gradle:
+        buildImage: gradle:4.4-jdk9
+    branches:
+      feature:
+        steps:
+          - gradle:
+            - task:
+                binary: gradle
+                task: "test build publish"
+'''
+
+public npm(Map yml, Map args) {
+  String dockerImage  = args?.buildImage  ?: yml.tools?.nodejs?.buildImage
+  List commandArgs    = args?.extraArgs   ?: yml.tools?.nodejs?.npm?.extraArgs
+  String command      = args?.command     ?: yml.tools?.nodejs?.npm?.command     ?: 'install'
+  // default to the npm cache from Artifactory
+  String npmRegistry  = args?.registry    ?: yml.tools?.nodejs?.npm?.registry
+
+  dockerImage = concurUtil.mustacheReplaceAll(dockerImage)
+  npmRegistry = concurUtil.mustacheReplaceAll(npmRegistry)
+
+  assert dockerImage : 'Workflows :: nodejs :: npm :: No [buildImage] provided in [tools.nodejs] or as a parameter to the nodejs.npm step.'
+
+  concurPipeline.debugPrint('Workflows :: nodejs :: npm', [
+    'args'        : args,
+    'dockerImage' : dockerImage,
+    'commandArgs' : commandArgs,
+    'command'     : command,
+    'npmRegistry' : npmRegistry
+  ])
+
+  docker.image(dockerImage).inside('-u 0:0') {
+    if (npmRegistry) {
+      sh "npm config set registry $npmRegistry -g"
+    }
+    command = "npm $command"
+    if (commandArgs) {
+      command = "$command ${commandArgs.join(' ')}"
+    }
+    sh command
+  }
+}
+
+public gulp(Map yml, Map args) {
+  String dockerImage  = args?.buildImage  ?: yml.tools?.nodejs?.buildImage
+  List commandArgs    = args?.extraArgs   ?: yml.tools?.nodejs?.gulp?.extraArgs
+  String command      = args?.command     ?: yml.tools?.nodejs?.gulp?.command   ?: 'install'
+
+  dockerImage = concurUtil.mustacheReplaceAll(dockerImage)
+
+  assert dockerImage  : "Workflows :: nodejs :: gulp :: No [buildImage] provided in [tools.nodejs] or as a parameter to the nodejs.gulp step."
+
+  concurPipeline.debugPrint('Workflows :: nodejs :: gulp', [
+    'args'        : args,
+    'dockerImage' : dockerImage,
+    'commandArgs' : commandArgs,
+    'command'     : command
+  ])
+
+  docker.image(dockerImage).inside('-u 0:0') {
+    command = "gulp $command"
+    if (commandArgs) {
+      command = "$command ${commandArgs.join(' ')}"
+    }
+    sh command
+  }
+}
+
+public grunt(Map yml, Map args) {
+  String dockerImage  = args?.buildImage  ?: yml.tools?.nodejs?.buildImage
+  List commandArgs    = args?.extraArgs   ?: yml.tools?.nodejs?.grunt?.extraArgs
+  String command      = args?.command     ?: yml.tools?.nodejs?.grunt?.command   ?: 'install'
+
+  dockerImage = concurUtil.mustacheReplaceAll(dockerImage)
+
+  assert dockerImage  : "Workflows :: nodejs :: grunt :: No [buildImage] provided in [tools.nodejs] or as a parameter to the nodejs.grunt step."
+
+  concurPipeline.debugPrint('Workflows :: nodejs :: grunt', [
+    'args'        : args,
+    'dockerImage' : dockerImage,
+    'commandArgs' : commandArgs,
+    'command'     : command
+  ])
+
+  docker.image(dockerImage).inside('-u 0:0') {
+    command = "grunt $command"
+    if (commandArgs) {
+      command = "$command ${commandArgs.join(' ')}"
+    }
+    sh command
+  }
+}
+
+return this;
