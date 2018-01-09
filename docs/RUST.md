@@ -59,3 +59,4 @@ pipelines:
 
 * [Rust](https://www.rust-lang.org/en-US/)
 * [Cargo](http://doc.crates.io)
+* [Docker Images](https://hub.docker.com/_/rust/)

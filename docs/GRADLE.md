@@ -62,4 +62,4 @@ pipelines:
 ## Additional Resources
 
 * [Gradle Official](https://gradle.org)
-* [Gradle Docker images](https://hub.docker.com/_/gradle/)
+* [Docker images](https://hub.docker.com/_/gradle/)

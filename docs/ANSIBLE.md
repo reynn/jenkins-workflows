@@ -95,3 +95,4 @@ pipelines:
 ## Additional Resources
 
 * [Ansible](https://docs.ansible.com/ansible/latest/playbooks.html)
+* [Docker Images](https://hub.docker.com/ansible/ansible/)

@@ -61,4 +61,4 @@ pipelines:
 
 ## Additional Resources
 
-* [Official Docker images](https://hub.docker.com/_/python/)
+* [Docker images](https://hub.docker.com/_/python/)
