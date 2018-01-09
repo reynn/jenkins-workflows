@@ -21,9 +21,70 @@
 
 ### npm
 
+> Execute NPM tasks.
+
+| Name        | Type   | Default   | Description                                               |
+|:------------|:-------|:----------|:----------------------------------------------------------|
+| dockerImage | String |           | Docker image to run all NodeJS commands in.               |
+| commandArgs | List   |           | Additional arguments to the NPM commands.                 |
+| command     | String | `install` | The NPM command to run within a nodejs.npm workflow step. |
+| npmRegistry | String |           | URL to an alternate NPM registry.                         |
+
+### npm Example
+
+```yaml
+branches:
+  feature:
+    steps:
+    - nodejs:
+      - node:
+      - node:
+          command: compile
+```
+
 ### gulp
 
+> Execute Gulp tasks.
+
+| Name        | Type   | Default   | Description                                                 |
+|:------------|:-------|:----------|:------------------------------------------------------------|
+| dockerImage | String |           | Docker image to run all NodeJS commands in.                 |
+| commandArgs | List   |           | Additional arguments to a Gulp command.                     |
+| command     | String | `install` | The Gulp command to run within a nodejs.gulp workflow step. |
+
+### gulp Example
+
+```yaml
+branches:
+  feature:
+    steps:
+    - nodejs:
+      - gulp:
+      - gulp:
+          name: compileScss
+```
+
 ### grunt
+
+> Execute Grunt tasks.
+
+| Name        | Type   | Default   | Description                                                   |
+|:------------|:-------|:----------|:--------------------------------------------------------------|
+| dockerImage | String |           | Docker image to run all NodeJS commands in.                   |
+| commandArgs | List   |           | Additional arguments to a Grunt command.                      |
+| command     | String | `install` | The Grunt command to run within a nodejs.grunt workflow step. |
+
+### grunt Example
+
+```yaml
+branches:
+  feature:
+    steps:
+    - nodejs:
+      - grunt:
+      - grunt:
+          name: webpack
+```
 
 ## Full Example Pipeline
 
@@ -34,15 +95,16 @@ pipelines:
       patterns:
         feature: .+
   tools:
-    gradle:
-      buildImage: gradle:4.4-jdk9
+    nodejs:
+      buildImage: node:9.3-alpine
   branches:
     feature:
       steps:
-        - gradle:
-          - task:
-              binary: gradle
-              task: "test build publish"
+        - nodejs:
+          - npm:
+        - docker:
+          - build:
+          - push:
 ```
 
 ## Additional Resources
