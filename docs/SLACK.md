@@ -70,3 +70,8 @@ pipelines:
           - build:
           - push:
 ```
+
+## Additional Resources
+
+* [Slack API](https://api.slack.com)
+* [Jenkins Slack plugin GitHub](https://github.com/jenkinsci/slack-plugin)
