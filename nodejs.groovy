@@ -59,17 +59,45 @@ full_example: |
         patterns:
           feature: .+
     tools:
-      gradle:
-        buildImage: gradle:4.4-jdk9
+      nodejs:
+        buildImage: node:9.3-alpine
     branches:
       feature:
         steps:
-          - gradle:
-            - task:
-                binary: gradle
-                task: "test build publish"
+          - nodejs:
+            - npm:
+          - docker:
+            - build:
+            - push:
 '''
 
+/*
+description: Execute NPM tasks.
+parameters:
+  - type: String
+    name: dockerImage
+    description: Docker image to run all NodeJS commands in.
+  - type: List
+    name: commandArgs
+    description: Additional arguments to the NPM commands.
+  - type: String
+    name: command
+    description: The NPM command to run within a nodejs.npm workflow step.
+    default: install
+  - type: String
+    name: npmRegistry
+    description: URL to an alternate NPM registry.
+example:
+  branches:
+    feature:
+      steps:
+        - nodejs:
+            # Simple
+            - node:
+            # Advanced
+            - node:
+                command: compile
+ */
 public npm(Map yml, Map args) {
   String dockerImage  = args?.buildImage  ?: yml.tools?.nodejs?.buildImage
   List commandArgs    = args?.extraArgs   ?: yml.tools?.nodejs?.npm?.extraArgs
@@ -102,6 +130,30 @@ public npm(Map yml, Map args) {
   }
 }
 
+/*
+description: Execute Gulp tasks.
+parameters:
+  - type: String
+    name: dockerImage
+    description: Docker image to run all NodeJS commands in.
+  - type: List
+    name: commandArgs
+    description: Additional arguments to a Gulp command.
+  - type: String
+    name: command
+    description: The Gulp command to run within a nodejs.gulp workflow step.
+    default: install
+example:
+  branches:
+    feature:
+      steps:
+        - nodejs:
+            # Simple
+            - gulp:
+            # Advanced
+            - gulp:
+                name: compileScss
+ */
 public gulp(Map yml, Map args) {
   String dockerImage  = args?.buildImage  ?: yml.tools?.nodejs?.buildImage
   List commandArgs    = args?.extraArgs   ?: yml.tools?.nodejs?.gulp?.extraArgs
@@ -127,6 +179,30 @@ public gulp(Map yml, Map args) {
   }
 }
 
+/*
+description: Execute Grunt tasks.
+parameters:
+  - type: String
+    name: dockerImage
+    description: Docker image to run all NodeJS commands in.
+  - type: List
+    name: commandArgs
+    description: Additional arguments to a Grunt command.
+  - type: String
+    name: command
+    description: The Grunt command to run within a nodejs.grunt workflow step.
+    default: install
+example:
+  branches:
+    feature:
+      steps:
+        - nodejs:
+            # Simple
+            - grunt:
+            # Advanced
+            - grunt:
+                name: webpack
+ */
 public grunt(Map yml, Map args) {
   String dockerImage  = args?.buildImage  ?: yml.tools?.nodejs?.buildImage
   List commandArgs    = args?.extraArgs   ?: yml.tools?.nodejs?.grunt?.extraArgs
