@@ -2,7 +2,7 @@
 
 ## Overview
 
-> Various git functions for use within your pipeline.
+> Various git functions for use within your pipeline. __NOTE__: You are fully responsible for usage of this workflow, there is potential to cause bad commits.
 
 ## Tools Section
 
