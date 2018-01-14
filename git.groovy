@@ -1,7 +1,7 @@
 import com.concur.*;
 
 workflowDoc = '''
-overview: Various git functions for use within your pipeline.
+overview: Various git functions for use within your pipeline. __NOTE__: You are fully responsible for usage of this workflow, there is potential to cause bad commits.
 additional_resources:
   - name: Official documentation on commits
     url: https://git-scm.com/docs/git-commit
