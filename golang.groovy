@@ -258,6 +258,68 @@ description: Build a Golang project.
 parameters:
   - type: String
     name: buildImage
+    description: Docker image that has the linting tool installed.
+  - type: List
+    name: additionalFlags
+    description: Any additional arguments to the linting tool as a YAML style List.
+  - type: List
+    name: enable
+    description: 
+    default: []
+  - type: String
+    name: binary
+    description: 
+    default: gometalinter
+  - type: String
+    name: goPath
+    description: The path within the container to mount the project into.
+    default: getGoPath()
+example:
+  branches:
+    feature:
+      steps:
+        - golang:
+            # Simple
+            - lint:
+            # Advanced
+            - lint:
+                binary: gometalinter.v1
+                enable:
+                  - vet
+                  - deadcode
+                  - goconst
+                  - errcheck
+                  - goimports
+                additionalFlags:
+                  - tests
+ */
+public lint(Map yml, Map args) {
+  String dockerImage    = args?.buildImage      ?: yml.tools?.golang?.buildImage
+  List additionalFlags  = args?.additionalFlags ?: yml.tools?.lint?.additionalFlags
+  List enable           = args?.enable          ?: yml.tools?.lint?.enable          ?: []
+  String binary         = args?.binary          ?: yml.tools?.lint?.binary          ?: "gometalinter"
+  String goPath         = args?.goPath          ?: yml.tools?.golang?.goPath        ?: getGoPath()
+
+  String lintCommand = binary
+
+  if (enable.size() > 0) {
+    lintCommand = "$lintCommand --disable-all ${enable.collect { "--enable=$it" }.join(' ')}"
+  }
+
+  if (additionalFlags) {
+    lintCommand = "$lintCommand ${additionalFlags.collect { "--$it" }.join(' ')}"
+  }
+
+  runCommandInDockerImage(dockerImage, goPath, {
+    sh "cd ${goPath} && ${lintCommand}"
+  })
+}
+
+/*
+description: Build a Golang project.
+parameters:
+  - type: String
+    name: buildImage
     required: true
     description: Docker image that has any Golang installed.
   - type: String
