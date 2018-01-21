@@ -525,17 +525,20 @@ private runCommandInDockerImage(String dockerImage, String goPath, Closure work)
 public getStageName(Map yml, Map args, String stepName) {
   switch(stepName) {
     case 'glide':
-      def glideCommand = args?.command ?: "install"
+      String glideCommand = args?.command ?: "install"
       return "golang: glide: ${glideCommand}"
     case 'godep':
-      def godepCommand = args?.command ?: "ensure"
+      String godepCommand = args?.command ?: "ensure"
       return "golang: godep: ${godepCommand}"
+    case 'lint':
+      String binary = args?.binary ?: yml.tools?.lint?.binary ?: "gometalinter"
+      return "golang: $binary"
     case 'build':
-      def os    = args?.env?.GOOS   ?: yml.tools?.golang?.env?.GOOS
-      def arch  = args?.env?.GOARCH ?: yml.tools?.golang?.env?.GOARCH
+      String os    = args?.env?.GOOS   ?: yml.tools?.golang?.env?.GOOS
+      String arch  = args?.env?.GOARCH ?: yml.tools?.golang?.env?.GOARCH
       return os ? arch ? "golang: build: $arch/$os" : "golang: build: $os" : 'golang: build'
     case 'test':
-      def testCommand = args?.additionalArgs
+      String testCommand = args?.additionalArgs
       return testCommand ? "golang: test: ${testCommand}" : 'golang: test'
   }
 }
