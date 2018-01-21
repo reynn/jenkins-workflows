@@ -297,7 +297,8 @@ public lint(Map yml, Map args) {
   String dockerImage    = args?.buildImage      ?: yml.tools?.golang?.buildImage
   List additionalFlags  = args?.additionalFlags ?: yml.tools?.lint?.additionalFlags
   List enable           = args?.enable          ?: yml.tools?.lint?.enable          ?: []
-  String binary         = args?.binary          ?: yml.tools?.lint?.binary          ?: "gometalinter"
+  String binary         = args?.binary          ?: yml.tools?.lint?.binary          ?: 'gometalinter'
+  String installer      = args?.installer       ?: yml.tools?.lint?.installer       ?: 'github.com/alecthomas/gometalinter'
   String goPath         = args?.goPath          ?: yml.tools?.golang?.goPath        ?: getGoPath()
 
   String lintCommand = binary
@@ -311,6 +312,7 @@ public lint(Map yml, Map args) {
   }
 
   runCommandInDockerImage(dockerImage, goPath, {
+    concurUtil.installGoPkg(binary, installer)
     sh "cd ${goPath} && ${lintCommand}"
   })
 }
