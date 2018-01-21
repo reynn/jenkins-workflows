@@ -311,12 +311,31 @@ public lint(Map yml, Map args) {
     lintCommand = "$lintCommand ${additionalFlags.collect { "--$it" }.join(' ')}"
   }
 
+  concurPipeline.debugPrint('Workflows :: Golang :: Lint', [
+    'dockerImage': dockerImage,
+    'additionalFlags': additionalFlags,
+    'enable': enable,
+    'binary': binary,
+    'installer': installer,
+    'goPath': goPath
+  ])
+
   runCommandInDockerImage(dockerImage, goPath, {
     concurUtil.installGoPkg(binary, installer)
     try {
       sh "$binary --install"
     } catch (e) {}
-    sh "cd ${goPath} && ${lintCommand}"
+    if (additionalFlags.find { it == 'checkstyle' }) {
+      def lintResults = sh returnStdout: true, script: "cd ${goPath} && ${lintCommand}"
+      writeFile file: 'checkstyle.xml', text: lintResults
+      concurPipeline.debugPrint('Workflows :: Golang :: Lint', 'Wrote checkstyle.xml file.')
+      if (concurPipeline.getgetPluginVersion('checkstyle')) {
+        concurPipeline.debugPrint('Workflows :: Golang :: Lint', 'Checkstyle plugin installed, calling plugin.')
+        checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'checkstyle.xml', unHealthy: ''
+      }
+    } else {
+      sh "cd ${goPath} && ${lintCommand}"
+    }
   })
 }
 
