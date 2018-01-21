@@ -313,6 +313,9 @@ public lint(Map yml, Map args) {
 
   runCommandInDockerImage(dockerImage, goPath, {
     concurUtil.installGoPkg(binary, installer)
+    try {
+      sh "$binary --install"
+    } catch (e) {}
     sh "cd ${goPath} && ${lintCommand}"
   })
 }
