@@ -550,10 +550,10 @@ public getStageName(Map yml, Map args, String stepName) {
   switch(stepName) {
     case 'glide':
       String glideCommand = args?.command ?: "install"
-      return "golang: glide: ${glideCommand}"
+      return "golang: glide: $glideCommand"
     case 'godep':
       String godepCommand = args?.command ?: "ensure"
-      return "golang: godep: ${godepCommand}"
+      return "golang: godep: $godepCommand"
     case 'lint':
       String binary = args?.binary ?: yml.tools?.lint?.binary ?: "gometalinter"
       return "golang: $binary"
@@ -562,7 +562,7 @@ public getStageName(Map yml, Map args, String stepName) {
       String arch  = args?.env?.GOARCH ?: yml.tools?.golang?.env?.GOARCH
       return os ? arch ? "golang: build: $arch/$os" : "golang: build: $os" : 'golang: build'
     case 'test':
-      String testCommand = args?.additionalArgs
+      Map testCommand = args?.additionalArgs
       return testCommand ? "golang: test: ${testCommand}" : 'golang: test'
   }
 }
