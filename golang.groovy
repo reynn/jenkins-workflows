@@ -312,19 +312,19 @@ public lint(Map yml, Map args) {
   }
 
   concurPipeline.debugPrint('Workflows :: Golang :: Lint', [
-    'dockerImage': dockerImage,
-    'additionalFlags': additionalFlags,
-    'enable': enable,
-    'binary': binary,
-    'installer': installer,
-    'goPath': goPath
+    'dockerImage'     : dockerImage,
+    'additionalFlags' : additionalFlags,
+    'enable'          : enable,
+    'binary'          : binary,
+    'installer'       : installer,
+    'goPath'          : goPath
   ])
 
   runCommandInDockerImage(dockerImage, goPath, {
     concurUtil.installGoPkg(binary, installer)
     try {
       sh "$binary --install"
-    } catch (e) {}
+    } catch (e) { error("Failed to install linters for $binary") }
     if (additionalFlags.find { it == 'checkstyle' }) {
       def lintResults = sh returnStdout: true, script: "cd ${goPath} && ${lintCommand}"
       writeFile file: 'checkstyle.xml', text: lintResults
