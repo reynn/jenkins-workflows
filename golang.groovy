@@ -319,7 +319,7 @@ public dep(Map yml, Map args) {
   ])
 
   runCommandInDockerImage(dockerImage, goPath, {
-    concurUtil.installGoPkg('dep', 'github.com/tools/dep')
+    concurUtil.installGoPkg('dep', 'github.com/golang/dep/cmd/dep')
     sh "cd ${goPath} && ${depCommand}"
   })
 }
