@@ -225,6 +225,7 @@ public push(Map yml, Map args) {
     'imageTag'            : imageTag,
     'fullImageName'       : fullImageName,
     'dockerEndpoint'      : dockerEndpoint,
+    'credentials'         : credentials,
     'dockerCredentialId'  : dockerCredentialId,
     'additionalTags'      : additionalTags
   ])
