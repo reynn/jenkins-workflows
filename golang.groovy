@@ -634,7 +634,7 @@ public getStageName(Map yml, Map args, String stepName) {
       String arch  = args?.env?.GOARCH ?: yml.tools?.golang?.env?.GOARCH
       return os ? arch ? "golang: build: $arch/$os" : "golang: build: $os" : 'golang: build'
     case 'test':
-      List testCommand = args?.additionalArgs
+      List testCommand = args?.additionalArgs.join(' ')
       return testCommand ? "golang: test: ${testCommand}" : 'golang: test'
   }
 }
