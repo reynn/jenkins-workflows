@@ -77,6 +77,63 @@ branches:
           command: update
 ```
 
+### dep
+
+> Dep is a tool for managing Go package dependencies.
+
+| Name           | Required   | Type   | Default             | Description                                              |
+|:---------------|:-----------|:-------|:--------------------|:---------------------------------------------------------|
+| buildImage     | Required   | String |                     | Docker image that has Godep installed.                   |
+| additionalArgs |            | List   |                     | Any additional arguments to Godep as a YAML style List.  |
+| command        |            | String | `restore`           | Which Godep command to run.                              |
+| goPath         |            | String | `determined by SCM` | The path within the container to mount the project into. |
+
+### dep Example
+
+```yaml
+branches:
+  feature:
+    steps:
+    - golang:
+      - dep:
+      - dep:
+          additionalArgs:
+          - -v
+          - -update
+```
+
+### lint
+
+> Build a Golang project.
+
+| Name            | Type   | Default        | Description                                                        |
+|:----------------|:-------|:---------------|:-------------------------------------------------------------------|
+| buildImage      | String |                | Docker image that has the linting tool installed.                  |
+| additionalFlags | List   |                | Any additional arguments to the linting tool as a YAML style List. |
+| enable          | List   | `[]`           | A list of linters to enable.                                       |
+| binary          | String | `gometalinter` | The binary you want to use for linting.                            |
+| goPath          | String | `getGoPath()`  | The path within the container to mount the project into.           |
+
+### lint Example
+
+```yaml
+branches:
+  feature:
+    steps:
+    - golang:
+      - lint:
+      - lint:
+          additionalFlags:
+          - tests
+          binary: gometalinter.v1
+          enable:
+          - vet
+          - deadcode
+          - goconst
+          - errcheck
+          - goimports
+```
+
 ### build
 
 > Build a Golang project.
