@@ -197,25 +197,13 @@ public push(Map yml, Map args) {
   List additionalTags   = args?.additionalTags ?: yml.tools?.docker?.additionalTags ?: []
   Map credentials       = args?.credentials    ?: yml.tools?.docker?.credentials    ?: [:]
 
-  def dockerCredentialId
-
-  assert imageName  : 'Workflows :: docker :: push :: No [imageName] provided in [tools.docker] or as a parameter to the docker.push step.'
-  assert imageTag   : 'Workflows :: docker :: push :: No [imageTag] provided in [tools.docker] or as a parameter to the docker.push step.'
+  assert imageName    : 'Workflows :: docker :: push :: No [imageName] provided in [tools.docker] or as a parameter to the docker.push step.'
+  assert imageTag     : 'Workflows :: docker :: push :: No [imageTag] provided in [tools.docker] or as a parameter to the docker.push step.'
+  assert credentials  : 'Workflows :: docker :: push :: No [credentials] provided in [tools.docker] or as a parameter to the docker.push step.'
 
   dockerEndpoint = concurUtil.mustacheReplaceAll(dockerEndpoint)
 
-  if (credentials != null) {
-    assert (credentials instanceof Map) :
-    '''|Workflows :: docker :: push :: Credentials are provided either in [tools.docker.credentials] or as a parameter to this step.
-       |The data provided is not a map.
-       |Credentials should be defined in your pipelines.yml as:
-       |----------------------------------------
-       |tools:
-       |  docker:
-       |    credentials:
-       |      description: example docker credentials'''.stripMargin().
-    dockerCredentialId = concurPipeline.getCredentialsWithCriteria(credentials).id
-  }
+  def dockerCredentialId = concurPipeline.getCredentialsWithCriteria(credentials).id
 
   def fullImageName = concurUtil.mustacheReplaceAll("${dockerEndpoint}/${imageName}:${imageTag}")
 

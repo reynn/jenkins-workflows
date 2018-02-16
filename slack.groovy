@@ -128,17 +128,17 @@ public send(Map yml, Map args) {
   assert message      : "Workflows :: slack :: send :: No [message] provided in tools.slack or as a parameter to this step."
   assert credentials  : "Workflows :: slack :: send :: No [credentials] provided in tools.slack or as a parameter to this step."
 
-  cred = concurPipeline.getCredentialsWithCriteria(credentials).id
+  def cred = concurPipeline.getCredentialsWithCriteria(credentials).id
   slackData.put('tokenCredentialId', cred)
 
   Map slackData = [
-    'channel'     : channel,
-    'message'     : message,
-    'credentials' : credentials,
-    'teamDomain'  : teamDomain,
-    'color'       : color,
-    'botUser'     : botUser,
-    'failOnError' : failOnError
+    'channel'           : channel,
+    'message'           : message,
+    'tokenCredentialId' : cred.id,
+    'teamDomain'        : teamDomain,
+    'color'             : color,
+    'botUser'           : botUser,
+    'failOnError'       : failOnError
   ]
 
   slackData.each {
