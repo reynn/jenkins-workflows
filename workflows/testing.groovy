@@ -6,8 +6,7 @@ failedTests = []
 passedTests = []
 
 public all(Map yml, Map args) {
-  def groovyFiles = findFiles '*.groovy'
-
+  def groovyFiles = findFiles glob: '*.groovy'
   Map runTests = [:]
 
   groovyFiles.each { groovyFile ->
