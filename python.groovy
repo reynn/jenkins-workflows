@@ -121,4 +121,9 @@ public getStageName(Map yml, Map args, String stepName) {
   }
 }
 
+public tests(Map yml, Map args) {
+  String workflowName = 'python'
+  println "Testing $workflowName"
+}
+
 return this;

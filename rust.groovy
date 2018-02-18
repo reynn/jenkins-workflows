@@ -128,4 +128,9 @@ public getStageName(Map yml, Map args, String stepName) {
   }
 }
 
+public tests(Map yml, Map args) {
+  String workflowName = 'rust'
+  println "Testing $workflowName"
+}
+
 return this;

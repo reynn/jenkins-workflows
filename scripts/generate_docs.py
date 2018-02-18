@@ -242,7 +242,7 @@ def entry_point():
 		parser.print_usage()
 		exit(1)
 
-	for fil in SCRIPT_PATH.rglob('*.groovy'):
+	for fil in SCRIPT_PATH.glob('*.groovy'):
 		if fil.name.startswith('example'):
 			continue
 		with fil.open() as groovy_file:
@@ -254,7 +254,7 @@ def entry_point():
 								docs_folder=SCRIPT_PATH / args.out_path,
 								workflow_doc=workflow_doc,
 								functions=functions)
-	create_index_markdown([x.name for x in SCRIPT_PATH.rglob('*.groovy') if x.name != 'example.groovy'], SCRIPT_PATH / args.out_path)
+	create_index_markdown([x.name for x in SCRIPT_PATH.glob('*.groovy') if x.name != 'example.groovy'], SCRIPT_PATH / args.out_path)
 
 
 if __name__ == '__main__':

@@ -150,4 +150,20 @@ public send(Map yml, Map args) {
   slackSend(slackData)
 }
 
+/*
+ * Set the name of the stage dynamically.
+ */
+public getStageName(Map yml, Map args, String stepName) {
+  switch(stepName) {
+    case 'send':
+      String channel = args?.channel ?: yml.tools?.slack?.channel
+      return channel ? "slack: send: ${channel}" : 'slack: send'
+  }
+}
+
+public tests(Map yml, Map args) {
+  String workflowName = 'slack'
+  println "Testing $workflowName"
+}
+
 return this;

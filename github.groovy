@@ -240,7 +240,7 @@ public createRelease(Map yml, Map args) {
   ||PreRelease |${"preRelease".center(20)}|
   ||Draft      |${"draft".center(20)}|
   """.stripMargin()
-  
+
   concurGitHubApi.createRelease(credentials, releaseNotes, tagName, releaseName, preRelease, draft)
 }
 
@@ -256,6 +256,11 @@ public getStageName(Map yml, Map args, String stepName) {
     case 'createRelease':
       return 'github: create release'
   }
+}
+
+public tests(Map yml, Map args) {
+  String workflowName = 'github'
+  println "Testing $workflowName"
 }
 
 return this;

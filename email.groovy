@@ -59,7 +59,7 @@ full_example: |
       master:
         steps:
           - email:
-            - send: 
+            - send:
                 to: team@domain.com
                 body: "Merge to master successful, deployment successful | {{ build_url }}"
 '''
@@ -137,7 +137,7 @@ public send(Map yml, Map options) {
 
   emailData.body    = emailData.body    ? concurUtil.mustacheReplaceAll(emailData.body) : '.'
   emailData.subject = emailData.subject ? concurUtil.mustacheReplaceAll(emailData.subject) : 'No Subject'
-  
+
   mail(emailData)
 }
 
@@ -150,6 +150,11 @@ public getStageName(Map yml, Map args, String stepName) {
       def emailTo = args?.to ?: yml.tools?.email?.to
       return emailTo ? "email: send: ${emailTo}" : 'email: send'
   }
+}
+
+public tests(Map yml, Map args) {
+  String workflowName = 'email'
+  println "Testing $workflowName"
 }
 
 return this;

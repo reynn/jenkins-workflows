@@ -228,4 +228,26 @@ public grunt(Map yml, Map args) {
   }
 }
 
+/*
+ * Set the name of the stage dynamically.
+ */
+public getStageName(Map yml, Map args, String stepName) {
+  switch(stepName) {
+    case 'npm':
+      String command = args?.command ?: yml.tools?.nodejs?.npm?.command ?: 'install'
+      return "nodejs: npm: ${command}"
+    case 'gulp':
+      String command = args?.command ?: yml.tools?.nodejs?.gulp?.command ?: 'install'
+      return "nodejs: gulp: ${command}"
+    case 'grunt':
+      String command = args?.command ?: yml.tools?.nodejs?.grunt?.command ?: 'install'
+      return "nodejs: grunt: ${command}"
+  }
+}
+
+public tests(Map yml, Map args) {
+  String workflowName = 'nodejs'
+  println "Testing $workflowName"
+}
+
 return this;

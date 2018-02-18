@@ -639,4 +639,9 @@ public getStageName(Map yml, Map args, String stepName) {
   }
 }
 
+public tests(Map yml, Map args) {
+  String workflowName = 'golang'
+  println "Testing $workflowName"
+}
+
 return this;
