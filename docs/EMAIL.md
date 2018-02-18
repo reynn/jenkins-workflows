@@ -49,6 +49,8 @@ branches:
           to: user@example.com
 ```
 
+### tests
+
 ## Full Example Pipeline
 
 ```yaml
@@ -72,7 +74,7 @@ pipelines:
     master:
       steps:
         - email:
-          - send: 
+          - send:
               to: team@domain.com
               body: "Merge to master successful, deployment successful | {{ build_url }}"
 ```

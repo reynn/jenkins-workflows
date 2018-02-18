@@ -41,6 +41,8 @@ branches:
           script: scripts/update_docs.py
 ```
 
+### tests
+
 ## Full Example Pipeline
 
 ```yaml

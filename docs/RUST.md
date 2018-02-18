@@ -39,6 +39,8 @@ branches:
           title: Fix for issue {{ branch_name }}.
 ```
 
+### tests
+
 ## Full Example Pipeline
 
 ```yaml

@@ -72,6 +72,8 @@ branches:
             description: example docker creds.
 ```
 
+### tests
+
 ## Full Example Pipeline
 
 ```yaml

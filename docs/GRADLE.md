@@ -39,6 +39,8 @@ branches:
           name: compile
 ```
 
+### tests
+
 ## Full Example Pipeline
 
 ```yaml

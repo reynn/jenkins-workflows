@@ -59,6 +59,8 @@ branches:
           playbook: scripts/ansible/example-playbook.yml
 ```
 
+### tests
+
 ## Full Example Pipeline
 
 ```yaml
