@@ -21,15 +21,10 @@ pipelines:
     slack:
       channel: git-notifications
   branches:
-    master:
-      steps:
-        - github:
-          - createRelease:
-        - slack:
-          - send:
-              message: "Version {{ short_version }} released."
     feature:
       steps:
+        - testing:
+          - all:
         - python:
           - script:
               file: scripts/generate_docs.py
@@ -43,3 +38,10 @@ pipelines:
               forceAdd: true
         - github:
           - createPullRequest:
+    master:
+      steps:
+        - github:
+          - createRelease:
+        - slack:
+          - send:
+              message: "Version {{ short_version }} released."
