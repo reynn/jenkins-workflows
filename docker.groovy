@@ -222,7 +222,8 @@ public push(Map yml, Map args) {
     // using this instead of withRegistry because of various errors encountered when using it in production.
     sh "docker logout ${dockerEndpoint}"
     sh "docker tag ${imageName}:${imageTag} ${fullImageName}"
-    sh "docker login ${dockerEndpoint} -u ${env.DOCKER_USERNAME} -p ${env.DOCKER_PASSWORD}"
+    // this will avoid warning when logging in [WARNING! Using --password via the CLI is insecure. Use --password-stdin.]
+    sh "echo -n '${env.DOCKER_PASSWORD}' | docker login ${dockerEndpoint} -u '${env.DOCKER_USERNAME}' --password-stdin"
     docker.image(fullImageName).push()
     if (additionalTags) {
       assert (additionalTags instanceof List) : "Workflows :: Docker :: Push :: additionalTags provided but not as a list."
@@ -237,13 +238,15 @@ public push(Map yml, Map args) {
  * Set the name of the stage dynamically.
  */
 public getStageName(Map yml, Map args, String stepName) {
+  String buildVersion = concurGit.getVersion(yml)
   switch(stepName) {
     case 'build':
       def dockerfile = args?.dockerfile ?: yml.tools?.docker?.dockerfile
-      return dockerfile ? "docker: build: ${dockerfile}": 'docker: build'
+      return dockerfile ? "docker: build: $dockerfile": 'docker: build'
     case 'push':
-      def dockerUri = args?.uri ?: yml.tools?.docker?.uri
-      return dockerUri ? "docker: push: ${dockerUri}" : 'docker: push'
+      String imageTag     = args?.imageTag  ?: yml.tools?.docker?.imageTag  ?: buildVersion
+      String imageName    = args?.imageName ?: yml.tools?.docker?.imageName ?: "${env.GIT_OWNER}/${env.GIT_REPO}"
+      return "docker: push: $imageName:$imageTag"
   }
 }
 
