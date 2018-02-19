@@ -44,8 +44,6 @@ branches:
           message: 'Test message during job #<{{ build_url }}|{{ build_number }}}>.'
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

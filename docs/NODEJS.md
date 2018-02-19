@@ -86,8 +86,6 @@ branches:
           name: webpack
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

@@ -49,8 +49,6 @@ branches:
           to: user@example.com
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml
