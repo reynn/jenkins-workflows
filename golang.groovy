@@ -366,15 +366,15 @@ example:
  */
 public lint(Map yml, Map args) {
   String dockerImage    = args?.buildImage      ?: yml.tools?.golang?.buildImage
-  List additionalFlags  = args?.additionalFlags ?: yml.tools?.lint?.additionalFlags
-  List enable           = args?.enable          ?: yml.tools?.lint?.enable          ?: []
-  String binary         = args?.binary          ?: yml.tools?.lint?.binary          ?: 'gometalinter'
-  String installer      = args?.installer       ?: yml.tools?.lint?.installer       ?: 'github.com/alecthomas/gometalinter'
+  List additionalFlags  = args?.additionalFlags ?: yml.tools?.golang?.lint?.additionalFlags
+  List enable           = args?.enable          ?: yml.tools?.golang?.lint?.enable          ?: []
+  String binary         = args?.binary          ?: yml.tools?.golang?.lint?.binary          ?: 'gometalinter'
+  String installer      = args?.installer       ?: yml.tools?.golang?.lint?.installer       ?: 'github.com/alecthomas/gometalinter'
   String goPath         = args?.goPath          ?: yml.tools?.golang?.goPath        ?: getGoPath()
 
   String lintCommand = binary
 
-  if (enable.size() > 0) {
+  if (enable) {
     lintCommand = "$lintCommand --disable-all ${enable.collect { "--enable=$it" }.join(' ')}"
   }
 
@@ -395,7 +395,7 @@ public lint(Map yml, Map args) {
     concurUtil.installGoPkg(binary, installer)
     try {
       sh "$binary --install"
-    } catch (e) { error("Failed to install linters for $binary") }
+    } catch (e) { error("Failed to install linters for $binary [$e]") }
 
     if (additionalFlags.find { it == 'checkstyle' }) {
       def lintResults = sh returnStdout: true, script: "cd ${goPath} && ${lintCommand}"
