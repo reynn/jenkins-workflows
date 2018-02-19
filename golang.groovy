@@ -401,7 +401,7 @@ public lint(Map yml, Map args) {
       def lintResults = sh returnStdout: true, script: "cd ${goPath} && ${lintCommand}"
       writeFile file: 'checkstyle.xml', text: lintResults
       println 'Wrote checkstyle.xml file.'
-      if (concurPipeline.getgetPluginVersion('checkstyle')) {
+      if (concurPipeline.getPluginVersion('checkstyle')) {
         println 'Checkstyle plugin installed, calling plugin.'
         checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'checkstyle.xml', unHealthy: ''
       }
