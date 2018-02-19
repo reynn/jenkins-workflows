@@ -400,9 +400,9 @@ public lint(Map yml, Map args) {
     if (additionalFlags.find { it == 'checkstyle' }) {
       def lintResults = sh returnStdout: true, script: "cd ${goPath} && ${lintCommand}"
       writeFile file: 'checkstyle.xml', text: lintResults
-      concurPipeline.debugPrint('Workflows :: Golang :: Lint', 'Wrote checkstyle.xml file.')
+      println 'Wrote checkstyle.xml file.'
       if (concurPipeline.getgetPluginVersion('checkstyle')) {
-        concurPipeline.debugPrint('Workflows :: Golang :: Lint', 'Checkstyle plugin installed, calling plugin.')
+        println 'Checkstyle plugin installed, calling plugin.'
         checkstyle canComputeNew: false, canRunOnFailed: true, defaultEncoding: '', healthy: '', pattern: 'checkstyle.xml', unHealthy: ''
       }
     } else {
