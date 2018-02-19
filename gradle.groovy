@@ -1,4 +1,4 @@
-concurPipeline  = new com.concur.ConcurCommands()
+concurPipeline  = new com.concur.Commands()
 concurUtil      = new com.concur.Util()
 
 workflowDoc = '''

@@ -94,7 +94,6 @@ full_example: |
                 limit: production
 '''
 
-concurArtUtil   = new ArtifactoryUtil()
 concurPipeline  = new Commands()
 concurUtil      = new Util()
 concurGit       = new Git()
