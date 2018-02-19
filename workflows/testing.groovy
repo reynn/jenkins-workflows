@@ -16,6 +16,7 @@ public all(Map yml, Map args) {
         def loadedFile = load f
         loadedFile.tests(yml, args)
       } catch(e) {
+        println "Failure in $f [$e]"
         failedTests.add(f)
       }
     }
