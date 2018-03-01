@@ -238,15 +238,12 @@ public push(Map yml, Map args) {
  * Set the name of the stage dynamically.
  */
 public getStageName(Map yml, Map args, String stepName) {
-  String buildVersion = concurGit.getVersion(yml)
+  String imageName = args?.imageName ?: yml.tools?.docker?.imageName ?: "${env.GIT_OWNER}/${env.GIT_REPO}"
   switch(stepName) {
     case 'build':
-      def dockerfile = args?.dockerfile ?: yml.tools?.docker?.dockerfile
-      return dockerfile ? "docker: build: $dockerfile": 'docker: build'
+      return dockerfile ? "docker: build: $imageName": 'docker: build'
     case 'push':
-      String imageTag     = args?.imageTag  ?: yml.tools?.docker?.imageTag  ?: buildVersion
-      String imageName    = args?.imageName ?: yml.tools?.docker?.imageName ?: "${env.GIT_OWNER}/${env.GIT_REPO}"
-      return "docker: push: $imageName:$imageTag"
+      return "docker: push: $imageName"
   }
 }
 
