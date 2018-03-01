@@ -1,5 +1,11 @@
 # Jenkins Workflows
 
+## v0.4.1
+
+### Changed
+
+* docker: Stage names changed to be more simple.
+
 ## v0.4.0
 
 ### Added
