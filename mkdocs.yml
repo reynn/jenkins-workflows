@@ -1,14 +1,11 @@
 docs_dir: markdown
-site_dir: docs
-site_name: jenkins-workflows
-theme:
-  name: material
 pages:
 - Home: index.md
 - Workflows:
   - Ansible: ANSIBLE.md
   - Build: BUILD.md
   - Docker: DOCKER.md
+  - Documentation: DOCUMENTATION.md
   - Email: EMAIL.md
   - Fpm: FPM.md
   - Git: GIT.md
@@ -21,3 +18,7 @@ pages:
   - Slack: SLACK.md
 - About:
   - Changelog: CHANGELOG.md
+site_dir: docs
+site_name: jenkins-workflows
+theme:
+  name: material
