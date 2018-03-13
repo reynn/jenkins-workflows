@@ -46,7 +46,7 @@ parameters:
   - type: String
     name: command
     default: build
-    description: Which mkdocs command to use, serve will not work, supported commands are: build and gh-deploy.
+    description: Which mkdocs command to use, serve will not work, supported commands are build and gh-deploy.
   - type: List
     name: extraArgs
     description: A list of extra arguments to append to the command.
