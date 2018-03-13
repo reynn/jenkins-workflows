@@ -46,7 +46,7 @@ parameters:
   - type: String
     name: command
     default: build
-    description: Which mkdocs command to use, serve will not work.
+    description: Which mkdocs command to use, serve will not work, supported commands are: build and gh-deploy.
   - type: List
     name: extraArgs
     description: A list of extra arguments to append to the command.
@@ -66,7 +66,11 @@ public mkdocs(Map yml, Map args) {
   String command    = args?.command     ?: yml.tools?.mkdocs?.command     ?: 'build'
   List extraArgs    = args?.extraArgs   ?: yml.tools?.mkdocs?.extraArgs   ?: []
 
-  assert buildImage : 'Workflows :: docdocumentationker :: mkdocs :: No [buildImage] provided in [tools.mkdocs] or as a parameter to the documentation.mkdocs step.'
+  assert buildImage : 'Workflows :: documentation :: mkdocs :: No [buildImage] provided in [tools.mkdocs] or as a parameter to the documentation.mkdocs step.'
+
+  def unsupportedCommands = ['serve']
+
+  assert !(command in unsupportedCommands) : "Workflows :: documentation :: mkdocs :: ${unsupportedCommands.join(', ')} are unsupported commands for mkdocs"
 
   def cmd = "mkdocs $command"
 

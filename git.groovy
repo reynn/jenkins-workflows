@@ -59,7 +59,7 @@ concurGit       = new Git()
 concurUtil      = new Util()
 
 /*
-description: Commit and push changes within your pipeline. Generally should be used for generated documentation changes. Use at risk.
+description: Commit and push changes within your pipeline. Generally should be used for generated documentation changes. Use at your own risk.
 parameters:
   - type: String
     name: message

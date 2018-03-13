@@ -33,4 +33,4 @@ pipelines:
 
 ## Contributing
 
-We welcome any and all contributions we do ask that you take a look at the [CONTRIBUTING.md](contributing) for more information.
+We welcome your contributions and request that you please make sure that you look at the [contributing guidelines](contributing) before contributing. If you have a question on a feature proposal, or a bug fix that you'd like to address, please create an issue so that contributors can discuss and collaborate.
