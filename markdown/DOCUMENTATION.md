@@ -18,11 +18,11 @@
 
 > Generate documentation using mkdocs
 
-| Name       | Type   | Default   | Description                                         |
-|:-----------|:-------|:----------|:----------------------------------------------------|
-| buildImage | String |           | Docker image that has mkdocs installed.             |
-| command    | String | `build`   | Which mkdocs command to use, serve will not work.   |
-| extraArgs  | List   |           | A list of extra arguments to append to the command. |
+| Name       | Type   | Default   | Description                                                                                   |
+|:-----------|:-------|:----------|:----------------------------------------------------------------------------------------------|
+| buildImage | String |           | Docker image that has mkdocs installed.                                                       |
+| command    | String | `build`   | Which mkdocs command to use, serve will not work, supported commands are build and gh-deploy. |
+| extraArgs  | List   |           | A list of extra arguments to append to the command.                                           |
 
 ### mkdocs Example
 

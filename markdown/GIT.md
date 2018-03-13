@@ -19,7 +19,7 @@
 
 ### commit
 
-> Commit and push changes within your pipeline. Generally should be used for generated documentation changes. Use at risk.
+> Commit and push changes within your pipeline. Generally should be used for generated documentation changes. Use at your own risk.
 
 | Name        | Type    | Default                                | Description                                                             |
 |:------------|:--------|:---------------------------------------|:------------------------------------------------------------------------|
