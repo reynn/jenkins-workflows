@@ -88,7 +88,7 @@ public getStageName(Map yml, Map args, String stepName) {
   switch(stepName) {
     case 'mkdocs':
       String command = args?.command ?: yml.tools?.mkdocs?.command
-      return "documentation: mkdocs: ${mageTarget}"
+      return "documentation: mkdocs: ${command}"
   }
 }
 
