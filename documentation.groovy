@@ -66,6 +66,8 @@ public mkdocs(Map yml, Map args) {
   String command    = args?.command     ?: yml.tools?.mkdocs?.command
   List extraArgs    = args?.extraArgs   ?: yml.tools?.mkdocs?.extraArgs   ?: []
 
+  assert buildImage : 'Workflows :: docdocumentationker :: mkdocs :: No [buildImage] provided in [tools.mkdocs] or as a parameter to the documentation.mkdocs step.'
+
   def cmd = "mkdocs $command"
 
   if (extraArgs) {
