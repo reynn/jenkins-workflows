@@ -63,7 +63,7 @@ example:
  */
 public mkdocs(Map yml, Map args) {
   String buildImage = args?.buildImage  ?: yml.tools?.mkdocs?.buildImage
-  String command    = args?.command     ?: yml.tools?.mkdocs?.command
+  String command    = args?.command     ?: yml.tools?.mkdocs?.command     ?: 'build'
   List extraArgs    = args?.extraArgs   ?: yml.tools?.mkdocs?.extraArgs   ?: []
 
   assert buildImage : 'Workflows :: docdocumentationker :: mkdocs :: No [buildImage] provided in [tools.mkdocs] or as a parameter to the documentation.mkdocs step.'
@@ -87,7 +87,7 @@ public mkdocs(Map yml, Map args) {
 public getStageName(Map yml, Map args, String stepName) {
   switch(stepName) {
     case 'mkdocs':
-      String command = args?.command ?: yml.tools?.mkdocs?.command
+      String command = args?.command ?: yml.tools?.mkdocs?.command ?: 'build'
       return "documentation: mkdocs: ${command}"
   }
 }
