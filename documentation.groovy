@@ -74,10 +74,8 @@ public mkdocs(Map yml, Map args) {
     }
   }
 
-  dir(mageFileDir) {
-    docker.image(buildImage).inside {
-      sh concurUtil.mustacheReplaceAll(cmd)
-    }
+  docker.image(buildImage).inside {
+    sh concurUtil.mustacheReplaceAll(cmd)
   }
 }
 
