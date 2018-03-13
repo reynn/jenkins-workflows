@@ -19,7 +19,7 @@
 
 ### commit
 
-> Execute an Ansible playbook
+> Commit and push changes within your pipeline. Generally should be used for generated documentation changes. Use at risk.
 
 | Name        | Type    | Default                                | Description                                                             |
 |:------------|:--------|:---------------------------------------|:------------------------------------------------------------------------|

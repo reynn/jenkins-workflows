@@ -51,32 +51,6 @@ branches:
           command: install
 ```
 
-### godep
-
-> Godep is a tool for managing Go package dependencies.
-
-| Name           | Required   | Type   | Default             | Description                                              |
-|:---------------|:-----------|:-------|:--------------------|:---------------------------------------------------------|
-| buildImage     | Required   | String |                     | Docker image that has Godep installed.                   |
-| additionalArgs |            | List   |                     | Any additional arguments to Godep as a YAML style List.  |
-| command        |            | String | `restore`           | Which Godep command to run.                              |
-| goPath         |            | String | `determined by SCM` | The path within the container to mount the project into. |
-
-### godep Example
-
-```yaml
-branches:
-  feature:
-    steps:
-    - golang:
-      - godep:
-      - godep:
-          additionalArgs:
-          - -v
-          - -goversion
-          command: update
-```
-
 ### dep
 
 > Dep is a tool for managing Go package dependencies.
@@ -219,6 +193,6 @@ pipelines:
 ## Additional Resources
 
 * [Glide](https://github.com/Masterminds/glide)
-* [Godep](https://github.com/tools/godep)
+* [Dep](https://github.com/golang/dep)
 * [Golang](https://golang.org)
 * [Docker Images](https://hub.docker.com/_/golang/)

@@ -60,13 +60,13 @@
 
 Please view the associated documentation on how to use these workflows, or visit [GitHub pages](https://concur.github.io/jenkins-workflows/) generated documentation.
 
-* [Ansible](docs/ANSIBLE.md)
-* [Build](docs/BUILD.md)
-* [Docker](docs/DOCKER.md)
-* [Email](docs/EMAIL.md)
-* [Fpm](docs/FPM.md)
-* [Git](docs/GIT.md)
-* [Github](docs/GITHUB.md)
-* [Golang](docs/GOLANG.md)
-* [Python](docs/PYTHON.md)
-* [Rust](docs/RUST.md)
+* [Ansible](ANSIBLE.md)
+* [Build](BUILD.md)
+* [Docker](DOCKER.md)
+* [Email](EMAIL.md)
+* [Fpm](FPM.md)
+* [Git](GIT.md)
+* [Github](GITHUB.md)
+* [Golang](GOLANG.md)
+* [Python](PYTHON.md)
+* [Rust](RUST.md)

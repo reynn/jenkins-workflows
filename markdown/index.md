@@ -2,7 +2,7 @@
 
 ## Purpose
 
-To be used in conjunction with the [jenkins-yml-workflow](1) repository in a Jenkins repository. These are steps to take for interacting with a specific tool.
+To be used in conjunction with the [jenkins-yml-workflow](https://github.com/concur/jenkins-yml-workflowLibs) repository in a Jenkins repository. These are steps to take for interacting with a specific tool.
 
 ## Creating Workflows
 
@@ -10,7 +10,7 @@ Basic structure of how the file should be laid out can be found in the [example.
 
 1. The `return this;` is required for Groovy to load anything.
 1. Methods must be using `public`, `def` is not sufficient due to the way the Groovy load method works.
-1. The [workflowLibs](1) when added as a global library is running outside of the Jenkins sandbox. Workflows will be inside the sandbox though so non white-listed methods cannot be used without approval.
+1. The [workflowLibs](https://github.com/concur/jenkins-yml-workflowLibs) when added as a global library is running outside of the Jenkins sandbox. Workflows will be inside the sandbox though so non white-listed methods cannot be used without approval.
 1. Private methods are perfectly acceptable as long as they are to be called within a public method.
 
 ## Where to add new workflows
@@ -33,6 +33,4 @@ pipelines:
 
 ## Contributing
 
-We welcome any and all contributions we do ask that you take a look at the [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
-
-[1]: https://github.com/concur/jenkins-yml-workflow
+We welcome any and all contributions we do ask that you take a look at the [CONTRIBUTING.md](contributing) for more information.

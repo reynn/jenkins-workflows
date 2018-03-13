@@ -1,3 +1,4 @@
 PyYAML==3.12
 tabulate==0.8.2
-Jinja2==2.10
+mkdocs==0.17.3
+mkdocs-material==2.7.0

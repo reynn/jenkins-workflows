@@ -59,7 +59,7 @@ concurGit       = new Git()
 concurUtil      = new Util()
 
 /*
-description: Execute an Ansible playbook
+description: Commit and push changes within your pipeline. Generally should be used for generated documentation changes. Use at risk.
 parameters:
   - type: String
     name: message

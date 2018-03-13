@@ -5,8 +5,8 @@ overview: Steps for building and testing with Golang.
 additional_resources:
   - name: Glide
     url: https://github.com/Masterminds/glide
-  - name: Godep
-    url: https://github.com/tools/godep
+  - name: Dep
+    url: https://github.com/golang/dep
   - name: Golang
     url: https://golang.org
   - name: Docker Images
@@ -178,78 +178,6 @@ public glide(Map yml, Map args) {
   runCommandInDockerImage(dockerImage, goPath, {
     concurUtil.installGoPkg('glide', 'github.com/Masterminds/glide')
     sh "cd ${goPath} && ${glideCommand}"
-  })
-}
-
-/*
-description: Godep is a tool for managing Go package dependencies.
-parameters:
-  - type: String
-    name: buildImage
-    required: true
-    description: Docker image that has Godep installed.
-  - type: List
-    name: additionalArgs
-    description: Any additional arguments to Godep as a YAML style List.
-  - type: String
-    name: command
-    default: restore
-    description: Which Godep command to run.
-  - type: String
-    name: goPath
-    default: determined by SCM
-    description: The path within the container to mount the project into.
-example:
-  branches:
-    feature:
-      steps:
-        - golang:
-            # Simple
-            - godep:
-            # Advanced
-            - godep:
-                command: update
-                additionalArgs:
-                  - "-v"
-                  - "-goversion"
- */
-public godep(Map yml, Map args) {
-  String dockerImage  = args?.buildImage      ?: yml.tools?.golang?.buildImage
-  List additionalArgs = args?.additionalArgs  ?: yml.tools?.godep?.additionalArgs
-  String command      = args?.command         ?: yml.tools?.godep?.command        ?: "restore"
-  String goPath       = args?.goPath          ?: yml.tools?.golang?.goPath        ?: getGoPath()
-
-  assert goPath      : "Workflows :: Golang :: godep :: [goPath] is required in [tools.golang] or as a parameter to the test step."
-  assert dockerImage : "Workflows :: Golang :: godep :: [buildImage] is needed in [tools.golang] or as a parameter to the test step."
-
-  def godepCommand = "godep ${command}"
-  /**
-   * Define additional args as any of the following
-   * ----------------------------------------------
-   * - golang:
-   *   - godep:
-   *       additionalArgs:
-   *         - "--force"
-   *         - "--skip-test"
-   *         - "-v"
-   */
-  if (additionalArgs) {
-    godepCommand = "$godepCommand ${additionalArgs.join(' ')}"
-  }
-
-  godepCommand = concurUtil.mustacheReplaceAll(godepCommand)
-
-  concurPipeline.debugPrint('Workflows :: golang :: godep', [
-    'dockerImage'     : dockerImage,
-    'goPath'          : goPath,
-    'command'         : command,
-    'additionalArgs'  : additionalArgs,
-    'godepCommand'    : godepCommand
-  ])
-
-  runCommandInDockerImage(dockerImage, goPath, {
-    concurUtil.installGoPkg('godep', 'github.com/tools/godep')
-    sh "cd ${goPath} && ${godepCommand}"
   })
 }
 
