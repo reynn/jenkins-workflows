@@ -1,6 +1,8 @@
 import org.codehaus.groovy.runtime.GStringImpl;
 
 workflowDoc = '''
+title: Docker
+overview: Build, tag and push Docker images to any registry.
 additional_resources:
   - name: Promotion - Artifactory
     url: https://wiki.concur.com/confluence/display/DA/Promotion+-+Artifactory

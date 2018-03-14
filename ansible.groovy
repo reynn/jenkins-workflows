@@ -1,6 +1,7 @@
 import com.concur.*;
 
 workflowDoc = '''
+title: Ansible
 overview: Execute Ansible playbooks within a pipeline.
 additional_resources:
   - name: Ansible

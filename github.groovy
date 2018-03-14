@@ -1,6 +1,7 @@
 import com.concur.*;
 
 workflowDoc = '''
+title: GitHub
 overview: Steps for interacting with GitHub.
 additional_resources:
   - name: GitHub API

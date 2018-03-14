@@ -2,6 +2,7 @@
 import com.concur.*;
 
 workflowDoc = '''
+title: Build
 overview: Includes workflows for running various language independent build tools.
 additional_resources:
   - name: Magefile GitHub

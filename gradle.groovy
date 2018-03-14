@@ -2,6 +2,7 @@ concurPipeline  = new com.concur.Commands()
 concurUtil      = new com.concur.Util()
 
 workflowDoc = '''
+title: Gradle
 overview: Execute any Gradle task.
 additional_resources:
   - name: Gradle Official

@@ -1,6 +1,7 @@
 import com.concur.*;
 
 workflowDoc = '''
+title: FPM
 overview: Use the FPM tool to create packages for various systems.
 additional_resources:
   - name: FPM

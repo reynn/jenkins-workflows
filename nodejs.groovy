@@ -4,6 +4,7 @@ concurPipeline  = new Commands()
 concurUtil      = new Util()
 
 workflowDoc = '''
+title: NodeJS
 overview: Execute any NPM, Grunt or Gulp task.
 additional_resources:
   - name: NodeJS Official Site

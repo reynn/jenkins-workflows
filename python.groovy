@@ -1,6 +1,7 @@
 import com.concur.*;
 
 workflowDoc = '''
+title: Python
 overview: Run Python scripts.
 additional_resources:
   - name: Docker images

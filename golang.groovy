@@ -1,6 +1,7 @@
 import com.concur.*;
 
 workflowDoc = '''
+title: Golang
 overview: Steps for building and testing with Golang.
 additional_resources:
   - name: Glide

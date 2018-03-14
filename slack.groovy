@@ -1,6 +1,7 @@
 import com.concur.*;
 
 workflowDoc = '''
+title: Slack
 overview: Send messages to a Slack channel during a job run.
 additional_resources:
   - name: Slack API

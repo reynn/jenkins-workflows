@@ -2,7 +2,8 @@
 import com.concur.*;
 
 workflowDoc = '''
-overview: Includes workflows for running various language independent build tools.
+title: Documentation
+overview: Includes workflows for running various language independent documentation generator tools.
 additional_resources:
   - name: Mkdocs
     url: http://www.mkdocs.org
