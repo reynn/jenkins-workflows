@@ -38,8 +38,6 @@ branches:
               target: Install
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

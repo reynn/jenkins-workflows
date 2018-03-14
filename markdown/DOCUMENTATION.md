@@ -38,8 +38,6 @@ branches:
               command: gh-deploy
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

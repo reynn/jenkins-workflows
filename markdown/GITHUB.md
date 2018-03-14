@@ -77,8 +77,6 @@ branches:
                 * Pipeline execution
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

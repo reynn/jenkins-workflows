@@ -51,8 +51,6 @@ branches:
               body: "Example email from {{ build_url }}"
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

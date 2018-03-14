@@ -176,8 +176,6 @@ branches:
               resultsPath: results
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

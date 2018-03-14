@@ -43,8 +43,6 @@ branches:
           - commit:
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

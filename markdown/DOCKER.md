@@ -80,8 +80,6 @@ branches:
                 - "{{ git_commit }}"
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml

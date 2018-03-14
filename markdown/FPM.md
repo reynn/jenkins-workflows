@@ -51,8 +51,6 @@ branches:
               limit: qa
 ```
 
-### tests
-
 ## Full Example Pipeline
 
 ```yaml
