@@ -211,7 +211,7 @@ def create_markdown_doc(name, docs_folder, workflow_doc, functions):
             lines.append(f"\n{create_markdown_table(file_docs.get('tools'))}")
         lines.append('\n## Available Methods')
         for g_function in functions:
-            if g_function.name in ['getStageName']:
+            if g_function.name in ['getStageName', 'tests']:
                 continue
             function_name = g_function.name.strip('\'')
             function_header = f"\n### {function_name}"
