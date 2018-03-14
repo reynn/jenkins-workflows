@@ -1,4 +1,4 @@
-# Github
+# None
 
 ## Overview
 
@@ -37,11 +37,13 @@
 branches:
   feature:
     steps:
-    - github:
-      - createPullRequest:
-      - createPullRequest:
-          title: Fix for issue {{ branch_name }}.
-          toBranch: develop
+      - github:
+          # Simple
+          - createPullRequest:
+          # Advanced
+          - createPullRequest:
+              toBranch: develop
+              title: Fix for issue {{ branch_name }}.
 ```
 
 ### createRelease
@@ -64,14 +66,18 @@ branches:
 branches:
   feature:
     steps:
-    - github:
-      - createRelease:
-      - createRelease:
-          name: 0.1.0-alpha
-          notes: '### New Features
-
-            * Pipeline execution'
+      - github:
+          # Simple
+          - createRelease:
+          # Advanced
+          - createRelease:
+              name: 0.1.0-alpha
+              notes: |
+                ### New Features
+                * Pipeline execution
 ```
+
+### tests
 
 ## Full Example Pipeline
 

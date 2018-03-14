@@ -124,7 +124,7 @@ parameters:
     name: goPath
     default: determined by SCM
     description: The path within the container to mount the project into.
-example:
+example: |
   branches:
     feature:
       steps:
@@ -199,7 +199,7 @@ parameters:
     name: goPath
     default: determined by SCM
     description: The path within the container to mount the project into.
-example:
+example: |
   branches:
     feature:
       steps:
@@ -273,7 +273,7 @@ parameters:
     name: goPath
     description: The path within the container to mount the project into.
     default: getGoPath()
-example:
+example: |
   branches:
     feature:
       steps:
@@ -362,7 +362,7 @@ parameters:
     name: mainPath
     section: golang
     description: Path to the main .go file to build.
-example:
+example: |
   branches:
     feature:
       steps:
@@ -464,7 +464,7 @@ parameters:
     name: junitPattern
     default: ${resultsPath}/*.xml
     description: An ant style pattern for the junit plugin, should match where your test results get stored.
-example:
+example: |
   branches:
     feature:
       steps:

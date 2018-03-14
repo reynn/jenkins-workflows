@@ -36,11 +36,12 @@ class Arg:
 
 
 class Method:
-    def __init__(self, method_name, method_body, method_args, doc):
+    def __init__(self, method_name, method_body, method_args, doc, deprecated):
         self.name = method_name
         self.args = Arg.parse(method_args)
         self.body = method_body
         self.doc = doc
+        self.deprecated = deprecated
 
     def __repr__(self) -> str:
         return f"Method({self.method_name}, {self.method_args})"
@@ -52,6 +53,7 @@ def parse_file(file_lines):
     function_groups = {}
 
     function_start_line = 0
+    function_end_line = 0
 
     for i, f in enumerate(file_lines):
         if f == '\n':
@@ -59,6 +61,7 @@ def parse_file(file_lines):
         line_is_method_def = METHOD_DEF_REGEX.match(f)
         if function_start_line != 0:
             if METHOD_END_REGEX.match(f):
+                deprecated_function = False
                 function_end_line = i
                 function_doc_lines = []
                 if file_lines[function_start_line - 1].strip() == '*/':
@@ -66,14 +69,20 @@ def parse_file(file_lines):
                     for doc_i, line in enumerate(file_lines[doc_end_line::-1]):
                         if line == '/*':
                             doc_start_line = doc_end_line - doc_i
-                            function_doc_lines = file_lines[doc_start_line + 1:doc_end_line]
+                            function_doc_lines = file_lines[doc_start_line +
+                                                            1:doc_end_line]
                             break
+                elif file_lines[function_start_line - 1].strip().startswith("@Deprecated"):
+                    deprecated_function = True
                 functions.append(
                     Method(
                         method_name=function_groups.get('method_name'),
                         method_args=function_groups.get('method_args'),
-                        method_body=file_lines[function_start_line + 1:function_end_line - 1],
-                        doc='\n'.join([x for x in function_doc_lines if x != '\n'])
+                        method_body=file_lines[function_start_line +
+                                               1:function_end_line - 1],
+                        doc='\n'.join(
+                            [x for x in function_doc_lines if x != '\n']),
+                        deprecated=deprecated_function
                     )
                 )
                 function_start_line = 0
@@ -166,7 +175,7 @@ def create_markdown_table(values):
 
 
 def update_mkdocs_yaml(groovy_files, mkdocs_file):
-    print('Generating index.md ...')
+    print('Updating the mkdocs.yml...')
     links = []
     for groovy_file in sorted(groovy_files):
         workflow_name = os.path.splitext(groovy_file)[0]
@@ -183,28 +192,49 @@ def update_mkdocs_yaml(groovy_files, mkdocs_file):
 
 def create_markdown_doc(name, docs_folder, workflow_doc, functions):
     docs_folder.mkdir(exist_ok=True)
-    lines = [f"# {name.replace('.groovy', '').title()}"]
+    lines = []
     if workflow_doc:
         file_docs = parse_yaml(str('\n'.join(workflow_doc)))
+        lines.append(f"# {file_docs.get('title')}")
         overview = file_docs.get('overview')
         if overview:
             lines.append(f"\n## Overview")
             lines.append(f"\n> {overview}")
+        if file_docs.get('disclaimer'):
+            lines.append(f"\n## Disclaimer")
+            lines.append(f"\n{file_docs.get('disclaimer')}")
+        if file_docs.get('functionality'):
+            lines.append(f"\n## Functionality")
+            lines.append(f"\n{file_docs.get('functionality')}")
         if file_docs.get('tools'):
             lines.append('\n## Tools Section')
             lines.append(f"\n{create_markdown_table(file_docs.get('tools'))}")
         lines.append('\n## Available Methods')
         for g_function in functions:
-            if g_function.name in ['getStageName', 'tests']:
+            if g_function.name in ['getStageName']:
                 continue
             function_name = g_function.name.strip('\'')
-            lines.append(f"\n### {function_name}")
+            function_header = f"\n### {function_name}"
+            if g_function.deprecated:
+                function_header += " (DEPRECATED)"
+            lines.append(function_header)
             if g_function.doc:
                 function_yaml_def = parse_yaml(g_function.doc)
                 lines.append(f"\n> {function_yaml_def.get('description')}")
-                lines.append(f"\n{create_markdown_table(function_yaml_def.get('parameters'))}")
-                lines.append(f"\n### {function_name} Example")
-                lines.append(f"\n```yaml\n{to_yaml(function_yaml_def.get('example'))}```")
+                if function_yaml_def.get('parameters'):
+                    lines.append(
+                        f"\n{create_markdown_table(function_yaml_def.get('parameters'))}")
+                else:
+                    lines.append("\nNo Parameters")
+                if function_yaml_def.get('example'):
+                    lines.append(f"\n### {function_name} Example")
+                    lines.append(
+                        f"\n```yaml\n{function_yaml_def.get('example')}\n```")
+                elif function_yaml_def.get('examples'):
+                    lines.append(f"\n### {function_name} Examples")
+                    for example in function_yaml_def.get('examples'):
+                        lines.append(f"\n#### {example.get('name')}")
+                        lines.append(f"\n```yaml\n{example.get('code')}\n```")
 
         if file_docs.get('full_example'):
             lines.append('\n## Full Example Pipeline')
@@ -213,7 +243,8 @@ def create_markdown_doc(name, docs_folder, workflow_doc, functions):
         if file_docs.get('additional_resources'):
             lines.append('\n## Additional Resources\n')
             for resource in file_docs.get('additional_resources'):
-                lines.append(f"* [{resource.get('name')}]({resource.get('url')})")
+                lines.append(
+                    f"* [{resource.get('name')}]({resource.get('url')})")
         with (docs_folder / name.upper().replace('.GROOVY', '.md')).open(mode='w') as w:
             w.write('\n'.join(lines))
     else:

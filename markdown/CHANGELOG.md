@@ -1,5 +1,12 @@
 # Jenkins Workflows
 
+## v0.5.0
+
+### Changed
+
+* Docs: Migrated to Mkdocs static generator.
+* Updated script to generate docs to be more robust.
+
 ## v0.4.1
 
 ### Changed

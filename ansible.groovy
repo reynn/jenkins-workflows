@@ -156,7 +156,7 @@ parameters:
     name: verbosity
     required: false
     description: Levels of verbose output to have. Example setting this to 2 would be the equivalent of -vv.
-example:
+example: |
   branches:
     feature:
       steps:

@@ -1,4 +1,4 @@
-# Golang
+# None
 
 ## Overview
 
@@ -43,12 +43,14 @@
 branches:
   feature:
     steps:
-    - golang:
-      - glide:
-      - glide:
-          additionalArgs:
-          - --force
-          command: install
+      - golang:
+          # Simple
+          - glide:
+          # Advanced
+          - glide:
+              command: install
+              additionalArgs:
+                - "--force"
 ```
 
 ### dep
@@ -68,12 +70,14 @@ branches:
 branches:
   feature:
     steps:
-    - golang:
-      - dep:
-      - dep:
-          additionalArgs:
-          - -v
-          - -update
+      - golang:
+          # Simple
+          - dep:
+          # Advanced
+          - dep:
+              additionalArgs:
+                - "-v"
+                - "-update"
 ```
 
 ### lint
@@ -94,18 +98,20 @@ branches:
 branches:
   feature:
     steps:
-    - golang:
-      - lint:
-      - lint:
-          additionalFlags:
-          - tests
-          binary: gometalinter.v1
-          enable:
-          - vet
-          - deadcode
-          - goconst
-          - errcheck
-          - goimports
+      - golang:
+          # Simple
+          - lint:
+          # Advanced
+          - lint:
+              binary: gometalinter.v1
+              enable:
+                - vet
+                - deadcode
+                - goconst
+                - errcheck
+                - goimports
+              additionalFlags:
+                - tests
 ```
 
 ### build
@@ -126,14 +132,16 @@ branches:
 branches:
   feature:
     steps:
-    - golang:
-      - build:
-      - build:
-          env:
-            GOARCH: amd64
-            GOOS: linux
-          mainPath: cmd/app/main.go
-          outFile: publish/example-binary
+      - golang:
+          # Simple
+          - build:
+          # Advanced
+          - build:
+              outFile: "publish/example-binary"
+              mainPath: "cmd/app/main.go"
+              env:
+                GOOS: linux
+                GOARCH: amd64
 ```
 
 ### test
@@ -156,15 +164,19 @@ branches:
 branches:
   feature:
     steps:
-    - golang:
-      - test:
-      - test:
-          additionalArgs:
-          - ./...
-          binary: ginkgo
-          gatherJunit: true
-          resultsPath: results
+      - golang:
+          # Simple
+          - test:
+          # Advanced
+          - test:
+              binary: ginkgo
+              additionalArgs:
+                - "./..."
+              gatherJunit: true
+              resultsPath: results
 ```
+
+### tests
 
 ## Full Example Pipeline
 

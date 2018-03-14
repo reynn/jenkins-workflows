@@ -70,7 +70,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#docker" tabindex="1" class="md-skip">
+      <a href="#none" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -289,6 +289,13 @@
           <li class="md-nav__item">
   <a href="#push-example" title="push Example" class="md-nav__link">
     push Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
   </a>
   
 </li>
@@ -559,6 +566,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -595,7 +609,7 @@
               
                 
                 
-                <h1 id="docker">Docker</h1>
+                <h1 id="none">None</h1>
 <h2 id="tools-section">Tools Section</h2>
 <table>
 <thead>
@@ -730,14 +744,16 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - docker:
-      - build:
-      - build:
-          buildArgs:
-            BuildDate: '{{ timestamp }}'
-            BuildVersion: '{{ build_version }}'
-            CommitSha: '{{ git_commit }}'
-          dockerfile: production.dockerfile
+      - docker:
+          # Simple
+          - build:
+          # Advanced
+          - build:
+              dockerfile: production.dockerfile
+              buildArgs:
+                CommitSha: &quot;{{ git_commit }}&quot;
+                BuildDate: &quot;{{ timestamp }}&quot;
+                BuildVersion: &quot;{{ build_version }}&quot;
 </code></pre>
 
 <h3 id="push">push</h3>
@@ -790,15 +806,18 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - docker:
-      - push:
-      - push:
-          additionalTags:
-          - '{{ git_commit }}'
-          credentials:
-            description: example docker creds.
+      - docker:
+          # Simple
+          - push:
+          # Advanced
+          - push:
+              credentials:
+                description: example docker creds.
+              additionalTags:
+                - &quot;{{ git_commit }}&quot;
 </code></pre>
 
+<h3 id="tests">tests</h3>
 <h2 id="full-example-pipeline">Full Example Pipeline</h2>
 <pre><code class="yaml">pipelines:
   tools:

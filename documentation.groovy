@@ -50,7 +50,7 @@ parameters:
   - type: List
     name: extraArgs
     description: A list of extra arguments to append to the command.
-example:
+example: |
   branches:
     feature:
       steps:

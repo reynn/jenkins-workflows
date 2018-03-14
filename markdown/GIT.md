@@ -1,4 +1,4 @@
-# Git
+# None
 
 ## Overview
 
@@ -36,10 +36,14 @@
 branches:
   feature:
     steps:
-    - git:
-      - commit: Example email from {{ build_url }}
-      - commit:
+      - git:
+          # Simple
+          - commit: "Example email from {{ build_url }}"
+          # Advanced
+          - commit:
 ```
+
+### tests
 
 ## Full Example Pipeline
 

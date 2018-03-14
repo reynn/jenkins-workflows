@@ -1,4 +1,4 @@
-# Gradle
+# None
 
 ## Overview
 
@@ -32,12 +32,16 @@
 branches:
   feature:
     steps:
-    - gradle:
-      - task:
-      - task:
-          binary: gradle
-          name: compile
+      - gradle:
+          # Simple
+          - task:
+          # Advanced
+          - task:
+              binary: gradle
+              name: compile
 ```
+
+### tests
 
 ## Full Example Pipeline
 

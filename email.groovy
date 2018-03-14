@@ -102,7 +102,7 @@ parameters:
   - type: String
     name: replyTo
     description: Reply-To email address.
-example:
+example: |
   branches:
     feature:
       steps:

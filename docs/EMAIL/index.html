@@ -70,7 +70,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#email" tabindex="1" class="md-skip">
+      <a href="#none" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -310,6 +310,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -545,6 +552,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -581,7 +595,7 @@
               
                 
                 
-                <h1 id="email">Email</h1>
+                <h1 id="none">None</h1>
 <h2 id="overview">Overview</h2>
 <blockquote>
 <p>Send an email within your pipeline.</p>
@@ -748,13 +762,16 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - email:
-      - send: Example email from {{ build_url }}
-      - send:
-          body: Example email from {{ build_url }}
-          to: user@example.com
+      - email:
+          # Simple
+          - send: &quot;Example email from {{ build_url }}&quot;
+          # Advanced
+          - send:
+              to: user@example.com
+              body: &quot;Example email from {{ build_url }}&quot;
 </code></pre>
 
+<h3 id="tests">tests</h3>
 <h2 id="full-example-pipeline">Full Example Pipeline</h2>
 <pre><code class="yaml">pipelines:
   tools:

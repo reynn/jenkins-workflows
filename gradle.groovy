@@ -58,7 +58,7 @@ parameters:
   - type: List
     name: extraArgs
     description: Any additional arguments to apply to the Gradle task.
-example:
+example: |
   branches:
     feature:
       steps:

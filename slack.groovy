@@ -104,7 +104,7 @@ parameters:
     description: If true the entire build will fail if the Slack send is unsuccessful.
     required: false
     default: false
-example:
+example: |
   branches:
     feature:
       steps:

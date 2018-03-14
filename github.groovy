@@ -88,7 +88,7 @@ parameters:
     name: summary
     default: Created by Buildhub run {{ build_url }}. Will load a template if available.
     description: A brief summary of the pull request.
-example:
+example: |
   branches:
     feature:
       steps:
@@ -180,7 +180,7 @@ parameters:
   - type: String
     name: notes
     description: Optionally provide the notes directly in pipelines.yml, not recommended.
-example:
+example: |
   branches:
     feature:
       steps:

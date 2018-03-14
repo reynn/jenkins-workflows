@@ -1,4 +1,4 @@
-# Rust
+# None
 
 ## Overview
 
@@ -32,12 +32,16 @@
 branches:
   feature:
     steps:
-    - rust:
-      - cargo:
-      - cargo:
-          command: build
-          title: Fix for issue {{ branch_name }}.
+      - rust:
+          # Simple
+          - cargo:
+          # Advanced
+          - cargo:
+              command: build
+              title: Fix for issue {{ branch_name }}.
 ```
+
+### tests
 
 ## Full Example Pipeline
 

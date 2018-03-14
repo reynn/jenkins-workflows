@@ -70,7 +70,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#slack" tabindex="1" class="md-skip">
+      <a href="#none" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -418,6 +418,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -545,6 +552,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -581,7 +595,7 @@
               
                 
                 
-                <h1 id="slack">Slack</h1>
+                <h1 id="none">None</h1>
 <h2 id="overview">Overview</h2>
 <blockquote>
 <p>Send messages to a Slack channel during a job run.</p>
@@ -720,12 +734,15 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - slack:
-      - send:
-      - send:
-          message: 'Test message during job #&lt;{{ build_url }}|{{ build_number }}}&gt;.'
+      - slack:
+          # Simple
+          - send:
+          # Advanced
+          - send:
+              message: &quot;Test message during job #&lt;{{ build_url }}|{{ build_number }}}&gt;.&quot;
 </code></pre>
 
+<h3 id="tests">tests</h3>
 <h2 id="full-example-pipeline">Full Example Pipeline</h2>
 <pre><code class="yaml">pipelines:
   tools:

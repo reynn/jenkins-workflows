@@ -70,7 +70,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#nodejs" tabindex="1" class="md-skip">
+      <a href="#none" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -410,6 +410,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -601,6 +608,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -637,7 +651,7 @@
               
                 
                 
-                <h1 id="nodejs">Nodejs</h1>
+                <h1 id="none">None</h1>
 <h2 id="overview">Overview</h2>
 <blockquote>
 <p>Execute any NPM, Grunt or Gulp task.</p>
@@ -757,10 +771,12 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - nodejs:
-      - node:
-      - node:
-          command: compile
+      - nodejs:
+          # Simple
+          - node:
+          # Advanced
+          - node:
+              command: compile
 </code></pre>
 
 <h3 id="gulp">gulp</h3>
@@ -801,10 +817,12 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - nodejs:
-      - gulp:
-      - gulp:
-          name: compileScss
+      - nodejs:
+          # Simple
+          - gulp:
+          # Advanced
+          - gulp:
+              name: compileScss
 </code></pre>
 
 <h3 id="grunt">grunt</h3>
@@ -845,12 +863,15 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - nodejs:
-      - grunt:
-      - grunt:
-          name: webpack
+      - nodejs:
+          # Simple
+          - grunt:
+          # Advanced
+          - grunt:
+              name: webpack
 </code></pre>
 
+<h3 id="tests">tests</h3>
 <h2 id="full-example-pipeline">Full Example Pipeline</h2>
 <pre><code class="yaml">pipelines:
   tools:

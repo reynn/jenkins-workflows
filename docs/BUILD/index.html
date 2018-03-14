@@ -70,7 +70,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#build" tabindex="1" class="md-skip">
+      <a href="#none" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -270,6 +270,13 @@
           <li class="md-nav__item">
   <a href="#mage-example" title="mage Example" class="md-nav__link">
     mage Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
   </a>
   
 </li>
@@ -545,6 +552,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -581,7 +595,7 @@
               
                 
                 
-                <h1 id="build">Build</h1>
+                <h1 id="none">None</h1>
 <h2 id="overview">Overview</h2>
 <blockquote>
 <p>Includes workflows for running various language independent build tools.</p>
@@ -660,12 +674,15 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - build:
-      - mage:
-      - mage:
-          target: Install
+      - build:
+          # Simple
+          - mage:
+          # Advanced
+          - mage:
+              target: Install
 </code></pre>
 
+<h3 id="tests">tests</h3>
 <h2 id="full-example-pipeline">Full Example Pipeline</h2>
 <pre><code class="yaml">pipelines:
   tools:

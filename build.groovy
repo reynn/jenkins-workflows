@@ -55,7 +55,7 @@ parameters:
     name: mageFileDir
     default: '.'
     description: The directory containing your magefile.
-example:
+example: |
   branches:
     feature:
       steps:

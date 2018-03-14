@@ -90,7 +90,7 @@ parameters:
     name: targetTypes
     description: Formats to create with the command.
     default: ['rpm']
-example:
+example: |
   branches:
     feature:
       steps:

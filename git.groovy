@@ -84,7 +84,7 @@ parameters:
   - type: Map
     name: credentials
     description: Credentials to use when pushing to git origin.
-example:
+example: |
   branches:
     feature:
       steps:

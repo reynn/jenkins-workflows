@@ -1,4 +1,4 @@
-# Documentation
+# None
 
 ## Overview
 
@@ -30,11 +30,15 @@
 branches:
   feature:
     steps:
-    - build:
-      - mkdocs:
-      - mkdocs:
-          command: gh-deploy
+      - build:
+          # Simple
+          - mkdocs:
+          # Advanced
+          - mkdocs:
+              command: gh-deploy
 ```
+
+### tests
 
 ## Full Example Pipeline
 

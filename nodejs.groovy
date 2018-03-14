@@ -87,7 +87,7 @@ parameters:
   - type: String
     name: npmRegistry
     description: URL to an alternate NPM registry.
-example:
+example: |
   branches:
     feature:
       steps:
@@ -143,7 +143,7 @@ parameters:
     name: command
     description: The Gulp command to run within a nodejs.gulp workflow step.
     default: install
-example:
+example: |
   branches:
     feature:
       steps:
@@ -192,7 +192,7 @@ parameters:
     name: command
     description: The Grunt command to run within a nodejs.grunt workflow step.
     default: install
-example:
+example: |
   branches:
     feature:
       steps:

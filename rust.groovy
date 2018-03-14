@@ -57,7 +57,7 @@ parameters:
     name: command
     description: Which cargo command to execute.
     default: build
-example:
+example: |
   branches:
     feature:
       steps:

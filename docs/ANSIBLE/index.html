@@ -70,7 +70,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
     <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
     
-      <a href="#ansible" tabindex="1" class="md-skip">
+      <a href="#none" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -258,6 +258,13 @@
           <li class="md-nav__item">
   <a href="#playbook-example" title="playbook Example" class="md-nav__link">
     playbook Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
   </a>
   
 </li>
@@ -545,6 +552,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#tests" title="tests" class="md-nav__link">
+    tests
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -581,7 +595,7 @@
               
                 
                 
-                <h1 id="ansible">Ansible</h1>
+                <h1 id="none">None</h1>
 <h2 id="overview">Overview</h2>
 <blockquote>
 <p>Execute Ansible playbooks within a pipeline.</p>
@@ -804,15 +818,18 @@
 <pre><code class="yaml">branches:
   feature:
     steps:
-    - ansible:
-      - playbook:
-      - playbook:
-          extraVars:
-            DOCKER_IMAGE: '{{ DOCKER_IMAGE_TAG }}'
-          limit: qa
-          playbook: scripts/ansible/example-playbook.yml
+      - ansible:
+          # Simple
+          - playbook:
+          # Advanced
+          - playbook:
+              playbook: scripts/ansible/example-playbook.yml
+              extraVars:
+                DOCKER_IMAGE: &quot;{{ DOCKER_IMAGE_TAG }}&quot;
+              limit: qa
 </code></pre>
 
+<h3 id="tests">tests</h3>
 <h2 id="full-example-pipeline">Full Example Pipeline</h2>
 <pre><code class="yaml">pipelines:
   tools:
