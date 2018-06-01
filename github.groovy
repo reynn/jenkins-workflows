@@ -50,10 +50,11 @@ full_example: |
             - createPullRequest:
 '''
 
-concurPipeline  = new Commands()
-concurGit       = new Git()
-concurGitHubApi = new GitHubApi()
-concurUtil      = new Util()
+concurPipeline    = new Commands()
+concurGit         = new Git()
+concurGitHubApi   = new GitHubApi()
+concurUtil        = new Util()
+concurVersion  = new Versioning()
 
 /*
 description: Create a Pull Request in GitHub.
@@ -196,8 +197,7 @@ example: |
                   * Pipeline execution
  */
 public createRelease(Map yml, Map args) {
-  String genVersion = concurGit.getVersion(yml).split('-')[0]
-  genVersion = genVersion.startsWith('v') ? "$genVersion" : "v$genVersion"
+  String genVersion = concurVersion.getVersion(yml).split('-')[0]
 
   Map credentials         = args?.credentials   ?: yml.tools?.github?.credentials
   String changelogFile    = args?.changelogFile ?: yml.tools?.github?.changelog?.file      ?: 'CHANGELOG.md'
@@ -214,7 +214,7 @@ public createRelease(Map yml, Map args) {
 
   if (!releaseNotes) {
     Map changelogReleases = concurUtil.parseChangelog(changelogFile, versionSeperator)
-    def thisRelease = changelogReleases.find { it =~ /^v?${releaseName.replace('v', '')}/ }
+    def thisRelease = changelogReleases.find { it =~ /^${releaseName}/ }
 
     assert thisRelease : "Workflows :: github :: createRelease :: Unable to find release $releaseName in the $changelogFile and no release notes are provided to the step."
 

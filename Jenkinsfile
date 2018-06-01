@@ -1,3 +1,3 @@
-@Library("plWorkflowLibs@master")_
+@Library("plWorkflowLibs@versioning")_
 
 plWorkflow {  }

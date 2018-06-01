@@ -747,7 +747,7 @@
         },
         {
             "location": "/CHANGELOG/",
-            "text": "Jenkins Workflows\n\n\nv0.5.0\n\n\nChanged\n\n\n\n\nDocs: Migrated to Mkdocs static generator.\n\n\nUpdated script to generate docs to be more robust.\n\n\n\n\nv0.4.1\n\n\nChanged\n\n\n\n\ndocker: Stage names changed to be more simple.\n\n\n\n\nv0.4.0\n\n\nAdded\n\n\n\n\nStart of a test framework for workflows.\n\n\n\n\nFixes\n\n\n\n\ngolang.lint: --checkstyle being specified would cause failures\n\n\ngolang.lint: Was not properly get values if specified under tools.golang\n\n\n\n\nChanged\n\n\n\n\ndocker.push: Logging in changed to \necho $password | docker login $endpoint -u $user --password-stdin\n\n\ndocker.*: Stage names changed to reflect the image name instead of dockerfile.\n\n\n\n\nv0.3.0\n\n\nAdded\n\n\n\n\ngolang.lint: Lint Golang code during a pipeline execution.\n\n\ngolang.dep: Support for the official dependency manager for Golang.\n\n\n\n\nFixes\n\n\n\n\ndocker.push: Wrong credential was being pulled.\n\n\ngolang.getStageName: Test workflow failed due to type safety.\n\n\nnodejs & slack: ConcurCommands class name doesn't exist.\n\n\n\n\nv0.2.0\n\n\nAdded\n\n\n\n\nGradle workflow\n\n\nSlack workflow\n\n\nNodeJS workflow\n\n\n\n\nUpdates\n\n\n\n\ngit.commit: Checks for changes before attempting the commit, this didn't cause a failure before but is cleaner now.\n\n\nAdd more asserts to workflows.\n\n\n\n\nv0.1.1\n\n\nFixed\n\n\n\n\ngithub.createRelease: Fix issue where generated name/tag can get multiple \nv\ns for a prefix.\n\n\n\n\n0.1.0\n\n\nAdded\n\n\nPlease view the associated documentation on how to use these workflows, or visit \nGitHub pages\n generated documentation.\n\n\n\n\nAnsible\n\n\nBuild\n\n\nDocker\n\n\nEmail\n\n\nFpm\n\n\nGit\n\n\nGithub\n\n\nGolang\n\n\nPython\n\n\nRust",
+            "text": "Jenkins Workflows\n\n\nv0.5.1\n\n\nChanged\n\n\n\n\nUpdated workflows to use the new Versioning class from workflow libraries.\n\n\n\n\nv0.5.0\n\n\nChanged\n\n\n\n\nDocs: Migrated to Mkdocs static generator.\n\n\nUpdated script to generate docs to be more robust.\n\n\n\n\nv0.4.1\n\n\nChanged\n\n\n\n\ndocker: Stage names changed to be more simple.\n\n\n\n\nv0.4.0\n\n\nAdded\n\n\n\n\nStart of a test framework for workflows.\n\n\n\n\nFixes\n\n\n\n\ngolang.lint: --checkstyle being specified would cause failures\n\n\ngolang.lint: Was not properly get values if specified under tools.golang\n\n\n\n\nChanged\n\n\n\n\ndocker.push: Logging in changed to \necho $password | docker login $endpoint -u $user --password-stdin\n\n\ndocker.*: Stage names changed to reflect the image name instead of dockerfile.\n\n\n\n\nv0.3.0\n\n\nAdded\n\n\n\n\ngolang.lint: Lint Golang code during a pipeline execution.\n\n\ngolang.dep: Support for the official dependency manager for Golang.\n\n\n\n\nFixes\n\n\n\n\ndocker.push: Wrong credential was being pulled.\n\n\ngolang.getStageName: Test workflow failed due to type safety.\n\n\nnodejs & slack: ConcurCommands class name doesn't exist.\n\n\n\n\nv0.2.0\n\n\nAdded\n\n\n\n\nGradle workflow\n\n\nSlack workflow\n\n\nNodeJS workflow\n\n\n\n\nUpdates\n\n\n\n\ngit.commit: Checks for changes before attempting the commit, this didn't cause a failure before but is cleaner now.\n\n\nAdd more asserts to workflows.\n\n\n\n\nv0.1.1\n\n\nFixed\n\n\n\n\ngithub.createRelease: Fix issue where generated name/tag can get multiple \nv\ns for a prefix.\n\n\n\n\n0.1.0\n\n\nAdded\n\n\nPlease view the associated documentation on how to use these workflows, or visit \nGitHub pages\n generated documentation.\n\n\n\n\nAnsible\n\n\nBuild\n\n\nDocker\n\n\nEmail\n\n\nFpm\n\n\nGit\n\n\nGithub\n\n\nGolang\n\n\nPython\n\n\nRust",
             "title": "Changelog"
         },
         {
@@ -756,12 +756,22 @@
             "title": "Jenkins Workflows"
         },
         {
+            "location": "/CHANGELOG/#v051",
+            "text": "",
+            "title": "v0.5.1"
+        },
+        {
+            "location": "/CHANGELOG/#changed",
+            "text": "Updated workflows to use the new Versioning class from workflow libraries.",
+            "title": "Changed"
+        },
+        {
             "location": "/CHANGELOG/#v050",
             "text": "",
             "title": "v0.5.0"
         },
         {
-            "location": "/CHANGELOG/#changed",
+            "location": "/CHANGELOG/#changed_1",
             "text": "Docs: Migrated to Mkdocs static generator.  Updated script to generate docs to be more robust.",
             "title": "Changed"
         },
@@ -771,7 +781,7 @@
             "title": "v0.4.1"
         },
         {
-            "location": "/CHANGELOG/#changed_1",
+            "location": "/CHANGELOG/#changed_2",
             "text": "docker: Stage names changed to be more simple.",
             "title": "Changed"
         },
@@ -791,7 +801,7 @@
             "title": "Fixes"
         },
         {
-            "location": "/CHANGELOG/#changed_2",
+            "location": "/CHANGELOG/#changed_3",
             "text": "docker.push: Logging in changed to  echo $password | docker login $endpoint -u $user --password-stdin  docker.*: Stage names changed to reflect the image name instead of dockerfile.",
             "title": "Changed"
         },

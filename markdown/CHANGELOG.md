@@ -1,5 +1,11 @@
 # Jenkins Workflows
 
+## v0.5.1
+
+### Changed
+
+* Updated workflows to use the new Versioning class from workflow libraries.
+
 ## v0.5.0
 
 ### Changed

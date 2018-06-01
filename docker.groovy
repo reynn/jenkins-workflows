@@ -1,3 +1,4 @@
+import com.concur.*;
 import org.codehaus.groovy.runtime.GStringImpl;
 
 workflowDoc = '''
@@ -74,9 +75,9 @@ full_example: |
                   - "{{ git_commit }}"
 '''
 
-concurPipeline  = new com.concur.Commands()
-concurUtil      = new com.concur.Util()
-concurGit       = new com.concur.Git()
+concurPipeline    = new Commands()
+concurUtil        = new Util()
+concurVersion  = new Versioning()
 
 /*
 description: Build a Docker image.
@@ -118,7 +119,7 @@ example: |
                   BuildVersion: "{{ build_version }}"
  */
 public build(Map yml, Map args) {
-  String buildVersion = concurGit.getVersion(yml)
+  String buildVersion = concurVersion.getVersion(yml)
 
   String dockerfile = args?.dockerfile            ?: yml.tools?.docker?.dockerfile
   String imageName  = args?.imageName             ?: yml.tools?.docker?.imageName   ?: "${env.GIT_OWNER}/${env.GIT_REPO}"
@@ -192,7 +193,7 @@ example: |
                   - "{{ git_commit }}"
  */
 public push(Map yml, Map args) {
-  String buildVersion   = concurGit.getVersion(yml)
+  String buildVersion   = concurVersion.getVersion(yml)
   String imageName      = args?.imageName      ?: yml.tools?.docker?.imageName      ?: "${env.GIT_OWNER}/${env.GIT_REPO}"
   String imageTag       = args?.imageTag       ?: yml.tools?.docker?.imageTag       ?: buildVersion
   String dockerEndpoint = args?.uri            ?: yml.tools?.docker?.uri            ?: env.DOCKER_URI
