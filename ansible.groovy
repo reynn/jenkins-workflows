@@ -172,19 +172,21 @@ example: |
                 limit: qa
  */
 public playbook(Map yml, Map args) {
-  String dockerImage  = args?.buildImage  ?: yml.tools?.ansible?.buildImage
-  String playbook     = args?.playbook    ?: yml.tools?.ansible?.playbook
-  String inventory    = args?.inventory   ?: yml.tools?.ansible?.inventory
-  String limit        = args?.limit       ?: yml.tools?.ansible?.limit
-  String sudoUser     = args?.sudoUser    ?: yml.tools?.ansible?.sudoUser     ?: 'root'
-  Map credentialDef   = args?.credentials ?: yml.tools?.ansible?.credentials  ?: yml.defaults?.credentials
-  Map extraVars       = args?.extraVars   ?: yml.tools?.ansible?.extraVars    ?: ""
-  List tags           = args?.tags        ?: yml.tools?.ansible?.tags         ?: ""
-  List skippedTags    = args?.skippedTags ?: yml.tools?.ansible?.skippedTags  ?: ""
-  List extras         = args?.extras      ?: yml.tools?.ansible?.extras       ?: ""
-  Boolean sudo        = args?.sudo        ?: yml.tools?.ansible?.sudo         ?: false
-  int forks           = args?.forks       ?: yml.tools?.ansible?.forks        ?: 10
-  int ymlVerbosity    = args?.verbosity   ?: yml.tools?.ansible?.verbosity    ?: ""
+  String dockerImage  = args?.buildImage          ?: yml.tools?.ansible?.buildImage
+  String playbook     = args?.playbook            ?: yml.tools?.ansible?.playbook
+  String inventory    = args?.inventory           ?: yml.tools?.ansible?.inventory
+  String limit        = args?.limit               ?: yml.tools?.ansible?.limit
+  String vaultFile    = args?.vault?.path         ?: yml.tools?.ansible?.vault?.path
+  Map vaultCred       = args?.valut?.credentials  ?: yml.tools?.ansible?.vault?.credentials
+  String sudoUser     = args?.sudoUser            ?: yml.tools?.ansible?.sudoUser     ?: 'root'
+  Map credentialDef   = args?.credentials         ?: yml.tools?.ansible?.credentials  ?: yml.defaults?.credentials
+  Map extraVars       = args?.extraVars           ?: yml.tools?.ansible?.extraVars    ?: ""
+  List tags           = args?.tags                ?: yml.tools?.ansible?.tags         ?: ""
+  List skippedTags    = args?.skippedTags         ?: yml.tools?.ansible?.skippedTags  ?: ""
+  List extras         = args?.extras              ?: yml.tools?.ansible?.extras       ?: ""
+  Boolean sudo        = args?.sudo                ?: yml.tools?.ansible?.sudo         ?: false
+  int forks           = args?.forks               ?: yml.tools?.ansible?.forks        ?: 10
+  int ymlVerbosity    = args?.verbosity           ?: yml.tools?.ansible?.verbosity    ?: ""
 
   def verbosity = 2
   if (ymlVerbosity) {
@@ -211,7 +213,6 @@ public playbook(Map yml, Map args) {
   assert inventory        : "Workflows :: ansible :: playbook :: [inventory] not provided in [tools.ansible] or as a parameter to the ansible.playbook step."
   assert credentialDef    : "Workflows :: ansible :: playbook :: [credentials] not provided in [tools.ansible] or as a parameter to the ansible.playbook step."
 
-  def credential = concurPipeline.getCredentialsWithCriteria(credentialDef)
 
   dockerImage = concurUtil.mustacheReplaceAll(dockerImage)
 
@@ -231,6 +232,7 @@ public playbook(Map yml, Map args) {
     if (!concurUtil.binAvailable('ansible')) {
       error("""Workflows :: ansible :: playbook :: Attempt to use ansible binary failed, please ensure the image [$dockerImage] contains an install of Ansible and that it is in the PATH.""")
     }
+    def credential = concurPipeline.getCredentialsWithCriteria(credentialDef)
     def ansibleVersion = sh(returnStdout: true, script: 'ansible --version').split('\n')[0].split(' ')[1]
     println "Container has Ansible version [$ansibleVersion] installed."
     def ansiblePluginAvailable = new Commands().getPluginVersion('ansible')
@@ -248,6 +250,36 @@ public playbook(Map yml, Map args) {
                       tags:           tags)
     } else {
       error("Workflows :: ansible :: playbook :: Ansible workflow currently only works with the Ansible plugin installed.")
+      String ansibleCommand = 'ansible-playbook'
+      if (inventory) {
+        ansibleCommand = "$ansibleCommand -i $inventory"
+      }
+      if (limit) {
+        ansibleCommand = "$ansibleCommand -l $limit"
+      }
+      if (sudo) {
+        ansibleCommand = "$ansibleCommand -b"
+      }
+      if (sudoUser) {
+        ansibleCommand = "$ansibleCommand --become-user=$sudoUser"
+      }
+      if (forks) {
+        ansibleCommand = "$ansibleCommand -f $forks"
+      }
+      if (tags) {
+        ansibleCommand = "$ansibleCommand -t ${tags.join(',')}"
+      }
+      if (skippedTags) {
+        ansibleCommand = "$ansibleCommand --skip-tags=${skippedTags.join(',')}"
+      }
+      if (extras) {
+        ansibleCommand = "$ansibleCommand $extras"
+      }
+      ansibleCommand = concurUtil.mustacheReplaceAll("$ansibleCommand $playbook")
+      concurPipeline.debugPrint("Workflows :: ansible :: playbook", ["ansibleCommand": ansibleCommand])
+      concurPipeline.executeWithCredentials(credentialDef, {
+        sh ansibleCommand
+      })
     }
   }
 }
